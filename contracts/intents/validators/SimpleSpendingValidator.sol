@@ -12,12 +12,7 @@ contract SimpleSpendingValidator is BaseIntentValidator {
     constructor(PolicyRegistry registry) BaseIntentValidator(registry) {}
 
     /// @inheritdoc BaseIntentValidator
-    function _checkFunds(IntentTypes.Intent calldata intent)
-        internal
-        view
-        override
-        returns (bytes1)
-    {
+    function _checkFunds(IntentTypes.Intent calldata intent) internal view override returns (bytes1) {
         // For demo purposes, only check that the sender has enough native balance
         if (intent.value > 0 && intent.sender.balance < intent.value) {
             return StatusCodes.STATUS_INSUFFICIENT_FUNDS;
