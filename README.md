@@ -22,14 +22,50 @@ ERC-1066-x402 is a set of Ethereum-compatible smart contracts that standardize *
 - ✅ TypeScript and Python SDKs for easy integration
 - ✅ Multi-chain support (7+ networks tested)
 
+## Why ERC1066-x402?
+
+### Standardized Semantics vs. Custom Contracts
+
+**Without ERC1066-x402:**
+- Each project implements custom error strings and status handling
+- AI agents must parse unstructured error messages
+- No standardized way to handle payment requirements (x402)
+- Gas waste from verbose error strings
+- Difficult to monitor and aggregate across protocols
+
+**With ERC1066-x402:**
+- **Machine-readable status codes** (`0x01`, `0x10`, `0x54`) that agents can branch on directly
+- **Standardized x402 integration** - `0x54` (INSUFFICIENT_FUNDS) maps to HTTP 402 with `X-Payment-Required` header
+- **Gas-efficient** - single-byte status codes vs. string errors
+- **Cross-protocol monitoring** - aggregate status codes across all deployments
+- **Pre-flight validation** - check if intent will succeed before spending gas
+
+### Real-World Benefits
+
+1. **AI Agent Autonomy**: Agents can make decisions based on status codes without parsing error messages
+   ```python
+   if result.status == "0x54":  # INSUFFICIENT_FUNDS
+       request_payment()
+   elif result.status == "0x01":  # SUCCESS
+       execute()
+   ```
+
+2. **Reduced Gas Costs**: Single-byte status codes save ~200-500 gas per validation vs. string errors
+
+3. **Easier Monitoring**: Standardized codes enable cross-protocol analytics and alerting
+
+4. **x402 Compliance**: Built-in HTTP 402 mapping for payment-required scenarios
+
 ## Project Status
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Smart Contracts | ✅ Production-ready | Deployed to Hyperion Testnet |
+| Smart Contracts | ✅ Production-ready | Deployed to Hyperion Testnet, [View on Explorer](https://hyperion-testnet-explorer.metisdevops.link/address/0x92C73F9f972Bb0bdC8e3c5411345695F2E3710D0) |
 | Gateway Service | ✅ Beta | Network-agnostic, Chainlist integration |
-| Python SDK | ✅ Published | Available on PyPI |
+| Python SDK | ✅ Published | Available on PyPI as `hyperkitlabs-erc1066-x402` |
 | TypeScript SDK | ⏳ Ready | Pending npm publication |
+| Test Coverage | ✅ 38/38 passing | Unit + integration tests, gas reports available |
+| Security | ✅ OpenZeppelin contracts | Using audited libraries, reentrancy guards, access controls |
 
 ## Quick Start
 
@@ -103,7 +139,7 @@ graph TB
 
 The gateway supports **any EVM-compatible chain** via Chainlist. Tested networks:
 
-- **Hyperion Testnet** (Chain ID: 133717) ✅ Deployed
+- **Hyperion Testnet** (Chain ID: 133717) ✅ [Deployed](https://hyperion-testnet-explorer.metisdevops.link/address/0x92C73F9f972Bb0bdC8e3c5411345695F2E3710D0)
 - **Metis Sepolia** (Chain ID: 59902)
 - **Metis Andromeda Mainnet** (Chain ID: 1088)
 - **Mantle Testnet** (Chain ID: 5003)
@@ -111,7 +147,7 @@ The gateway supports **any EVM-compatible chain** via Chainlist. Tested networks
 - **Avalanche Fuji** (Chain ID: 43113)
 - **Avalanche C-Chain** (Chain ID: 43114)
 
-See [Network Configuration](./docs/deployment/NETWORKS.md) for details.
+**Network-Agnostic Design**: The gateway automatically discovers RPC endpoints via [Chainlist](https://chainlist.org), so you can add new networks without code changes. See [Network Configuration](./docs/deployment/NETWORKS.md) for details.
 
 ## Documentation
 
@@ -168,7 +204,81 @@ pip install hyperkitlabs-erc1066-x402
 npm install @hyperkit/erc1066-x402-sdk
 ```
 
-## Usage Example
+## Featured Examples
+
+### AI Agent Payment Flow
+
+An AI agent uses ERC1066-x402 to handle payment-required scenarios:
+
+```python
+from erc1066_x402 import ERC1066Client, Intent
+
+client = ERC1066Client("https://gateway.example.com")
+
+intent = Intent(
+    sender="0x...",
+    target="0x...",
+    data="0x...",
+    value="1000000000000000",  # 0.001 ETH
+    nonce="1",
+    policyId="0x..."
+)
+
+# Pre-flight validation
+result = client.validate_intent(intent, chain_id=133717)
+
+if result.status == "0x54":  # INSUFFICIENT_FUNDS
+    # Gateway returns HTTP 402 with X-Payment-Required header
+    # Agent requests payment from user
+    payment_url = f"{gateway_url}/pay?intent={intent_hash}"
+    request_payment(payment_url)
+elif result.status == "0x01":  # SUCCESS
+    # Execute immediately
+    client.execute_intent(intent, chain_id=133717)
+elif result.status == "0x20":  # TOO_EARLY
+    # Retry after Retry-After header delay
+    retry_after = result.httpCode == 202
+    schedule_retry(retry_after)
+```
+
+### Gateway Integration
+
+The gateway automatically maps status codes to HTTP responses:
+
+```typescript
+// Gateway receives intent validation request
+POST /intents/validate
+{
+  "sender": "0x...",
+  "target": "0x...",
+  "value": "1000000000000000"
+}
+
+// If balance insufficient, returns:
+HTTP 402 Payment Required
+X-Payment-Required: true
+{
+  "status": "0x54",
+  "intentHash": "0x...",
+  "message": "Insufficient funds"
+}
+```
+
+### Multi-Chain Deployment
+
+Deploy once, use across all supported chains:
+
+```bash
+# Deploy to multiple networks
+npm run deploy:hyperion:testnet
+npm run deploy:metis:sepolia
+npm run deploy:mantle:testnet
+
+# Gateway automatically discovers RPCs via Chainlist
+# No hardcoded network configs needed
+```
+
+## Usage Examples
 
 ### Python SDK
 
@@ -247,15 +357,24 @@ We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guideline
 
 **For more help:** See [Troubleshooting Guide](./docs/TROUBLESHOOTING.md)
 
-## Status Codes
+## Status Codes → HTTP/x402 Mapping
 
-The system uses a canonical subset of ERC-1066 status codes:
+ERC1066-x402 maps onchain status codes to HTTP/x402 responses, enabling seamless integration with payment gateways and AI agents.
 
-- `0x01` SUCCESS - Execution allowed
-- `0x10` DISALLOWED - Policy violation
-- `0x54` INSUFFICIENT_FUNDS - Payment required
-- `0x20` TOO_EARLY - Before valid time window
-- `0x21` TOO_LATE - After valid time window
+| Status Code | Meaning | HTTP Code | Headers | Agent Action |
+|-------------|---------|-----------|---------|--------------|
+| `0x01` | SUCCESS | 200 | - | Execute immediately |
+| `0x11` | ALLOWED | 200 | - | Execute immediately |
+| `0x10` | DISALLOWED | 403 | - | Deny, inform user |
+| `0x54` | INSUFFICIENT_FUNDS | **402** | `X-Payment-Required: true` | Request payment |
+| `0x20` | TOO_EARLY | 202 | `Retry-After: 60` | Retry later |
+| `0x21` | TOO_LATE | 410 | - | Reject, expired |
+| `0x22` | NONCE_USED | 409 | - | Reject, replay detected |
+| `0x50` | TRANSFER_FAILED | 500 | - | Retry or investigate |
+| `0xA0` | INVALID_FORMAT | 400 | - | Fix intent structure |
+| `0xA2` | UNSUPPORTED_CHAIN | 421 | - | Use different chain |
+
+**Key Insight**: The `0x54` → HTTP 402 mapping enables standardized payment flows. When an agent receives HTTP 402 with `X-Payment-Required`, it knows to request payment before retrying.
 
 See [Status Codes Specification](./docs/spec/status-codes.md) for complete list.
 
