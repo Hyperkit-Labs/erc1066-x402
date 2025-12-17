@@ -14,12 +14,7 @@ contract IntentExecutor is ReentrancyGuard {
     error ExecutionDenied(bytes1 status);
     error ExecutionFailed(bytes1 status, bytes data);
 
-    event IntentExecuted(
-        bytes32 indexed intentHash,
-        bytes1 status,
-        address indexed executor,
-        bytes returnData
-    );
+    event IntentExecuted(bytes32 indexed intentHash, bytes1 status, address indexed executor, bytes returnData);
 
     constructor(IIntentValidator _validator) {
         validator = _validator;
