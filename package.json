@@ -17,7 +17,7 @@
     "commit:dry": "bash version/scripts/parallel-commit.sh --dry-run",
     "commit:all": "git add -A && git commit -m \"chore: update files\"",
     "deploy:hyperion:testnet": "forge script script/Deploy.s.sol:Deploy --rpc-url hyperion_testnet --broadcast --verify",
-    "deploy:metis:sepolia": "forge script script/Deploy.s.sol:Deploy --rpc-url metis_sepolia --broadcast --verify",
+    "deploy:metis:sepolia": "forge script script/Deploy.s.sol:Deploy --rpc-url metis_sepolia --broadcast --legacy --gas-price 1000000000 --verify",
     "deploy:metis:mainnet": "forge script script/Deploy.s.sol:Deploy --rpc-url metis_mainnet --broadcast --verify",
     "deploy:mantle:testnet": "forge script script/Deploy.s.sol:Deploy --rpc-url mantle_testnet --broadcast --verify",
     "deploy:mantle:mainnet": "forge script script/Deploy.s.sol:Deploy --rpc-url mantle_mainnet --broadcast --verify",
