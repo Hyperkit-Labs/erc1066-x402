@@ -7,6 +7,8 @@ import {IntentTypes} from "./IntentTypes.sol";
 /// @title PolicyRegistry
 /// @notice Stores versioned policies referenced by intents
 contract PolicyRegistry is Ownable {
+    constructor() Ownable(msg.sender) {}
+
     /// @dev Mapping from policyId to Policy data
     mapping(bytes32 => IntentTypes.Policy) private _policies;
 
@@ -46,15 +48,4 @@ contract PolicyRegistry is Ownable {
     function policyExists(bytes32 policyId) external view returns (bool) {
         return _policyExists[policyId];
     }
-}
-
-{
-  "cells": [],
-  "metadata": {
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "nbformat": 4,
-  "nbformat_minor": 2
 }
