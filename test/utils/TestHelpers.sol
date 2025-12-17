@@ -32,16 +32,7 @@ library TestHelpers {
         view
         returns (IntentTypes.Intent memory)
     {
-        return createIntent(
-            sender,
-            target,
-            "",
-            0,
-            0,
-            0,
-            0,
-            policyId
-        );
+        return createIntent(sender, target, "", 0, 0, 0, 0, policyId);
     }
 
     function createPolicy(
