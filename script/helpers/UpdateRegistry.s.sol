@@ -25,7 +25,7 @@ contract UpdateRegistry is Script, KeyHelper {
         console.log("\n=== JSON FOR REGISTRY ===");
         console.log("{");
         console.log('  "', block.chainid, '": {');
-        console.log('    "chainId": ', block.chainid, ',');
+        console.log('    "chainId": ', block.chainid, ",");
         console.log('    "name": "Chain ', block.chainid, '",');
         console.log('    "policyRegistry": "', vm.toString(address(registry)), '",');
         console.log('    "validator": "', vm.toString(address(validator)), '",');
