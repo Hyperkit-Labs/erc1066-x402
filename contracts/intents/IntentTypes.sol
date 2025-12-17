@@ -28,14 +28,3 @@ library IntentTypes {
         uint256[] allowedChains;    // allowed chain IDs; empty = any
     }
 }
-
-{
-  "cells": [],
-  "metadata": {
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "nbformat": 4,
-  "nbformat_minor": 2
-}
