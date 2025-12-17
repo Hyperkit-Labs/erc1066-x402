@@ -120,7 +120,14 @@ abstract contract BaseIntentValidator is IIntentValidator {
 
     /// @notice Funds-related checks, default implementation returns success
     /// @dev Override in concrete validators to perform balance/allowance checks
-    function _checkFunds(IntentTypes.Intent calldata /*intent*/) internal view virtual returns (bytes1) {
+    function _checkFunds(
+        IntentTypes.Intent calldata /*intent*/
+    )
+        internal
+        view
+        virtual
+        returns (bytes1)
+    {
         return StatusCodes.STATUS_SUCCESS;
     }
 }
