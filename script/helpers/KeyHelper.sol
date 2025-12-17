@@ -10,7 +10,7 @@ abstract contract KeyHelper is Script {
     function getPrivateKey() internal view returns (uint256) {
         string memory keyStr = vm.envOr("PRIVATE_KEY", string(""));
         require(bytes(keyStr).length > 0, "PRIVATE_KEY not set");
-        
+
         // Check if it starts with 0x
         bytes memory keyBytes = bytes(keyStr);
         if (keyBytes.length >= 2 && keyBytes[0] == "0" && (keyBytes[1] == "x" || keyBytes[1] == "X")) {
