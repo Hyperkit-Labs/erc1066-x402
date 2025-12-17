@@ -1,0 +1,14 @@
+* @hyperkit-labs/core-team
+
+contracts/ @hyperkit-labs/core-team @ArhonJay @Justinedevs
+test/ @hyperkit-labs/core-team @ArhonJay @Justinedevs
+script/ @hyperkit-labs/core-team @Tristan-T-Dev @ArhonJay @Justinedevs
+
+.github/ @hyperkit-labs/core-team @Tristan-T-Dev @ArhonJay @Justinedevs
+
+docs/ @hyperkit-labs/core-team @Tristan-T-Dev @ArhonJay @Justinedevs
+
+packages/gateway/ @hyperkit-labs/core-team
+packages/sdk-ts/ @hyperkit-labs/core-team @ArhonJay @Justinedevs
+packages/sdk-python/ @hyperkit-labs/core-team @ArhonJay @Justinedevs
+
