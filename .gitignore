@@ -34,6 +34,16 @@ bin-release/
 *.ipa
 *.apk
 
+# Package build outputs
+packages/*/dist/
+packages/*/build/
+packages/*/*.egg-info/
+packages/*/__pycache__/
+packages/*/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
