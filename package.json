@@ -1,0 +1,37 @@
+{
+  "name": "@hyperkit/erc1066-x402",
+  "version": "0.1.0",
+  "description": "ERC-1066 status codes and intent validation for x402 gateway integration",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test",
+    "test:coverage": "forge coverage",
+    "test:gas": "forge test --gas-report",
+    "lint": "forge fmt --check",
+    "format": "forge fmt",
+    "commit": "bash version/scripts/parallel-commit.sh",
+    "commit:dry": "bash version/scripts/parallel-commit.sh --dry-run",
+    "commit:all": "git add -A && git commit -m \"chore: update files\"",
+    "deploy:hyperion:testnet": "forge script script/Deploy.s.sol:Deploy --rpc-url hyperion_testnet --broadcast --verify",
+    "deploy:metis:sepolia": "forge script script/Deploy.s.sol:Deploy --rpc-url metis_sepolia --broadcast --verify",
+    "deploy:metis:mainnet": "forge script script/Deploy.s.sol:Deploy --rpc-url metis_mainnet --broadcast --verify",
+    "deploy:mantle:testnet": "forge script script/Deploy.s.sol:Deploy --rpc-url mantle_testnet --broadcast --verify",
+    "deploy:mantle:mainnet": "forge script script/Deploy.s.sol:Deploy --rpc-url mantle_mainnet --broadcast --verify",
+    "deploy:avalanche:fuji": "forge script script/Deploy.s.sol:Deploy --rpc-url avalanche_fuji --broadcast --verify",
+    "deploy:avalanche:mainnet": "forge script script/Deploy.s.sol:Deploy --rpc-url avalanche_mainnet --broadcast --verify",
+    "clean": "forge clean",
+    "docs:generate": "forge doc --out docs/api"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-solidity": "^1.3.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+
