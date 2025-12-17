@@ -49,10 +49,7 @@ contract DeployMultiChain is Script, KeyHelper {
         vm.stopBroadcast();
     }
 
-    function _deployChain(DeploymentConfig.ChainConfig memory config)
-        internal
-        returns (Deployment memory)
-    {
+    function _deployChain(DeploymentConfig.ChainConfig memory config) internal returns (Deployment memory) {
         console.log("Deploying to chain ID:", config.chainId);
 
         PolicyRegistry registry = new PolicyRegistry();
