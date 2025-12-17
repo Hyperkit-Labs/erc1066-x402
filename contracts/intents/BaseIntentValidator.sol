@@ -91,11 +91,10 @@ abstract contract BaseIntentValidator is IIntentValidator {
 
         // Selector check (if any)
         if (policy.allowedSelectors.length > 0 && intent.data.length >= 4) {
-            bytes4 selector;
-            // read first 4 bytes of calldata for intent.data
-            assembly {
-                selector := calldataload(intent.data.offset)
-            }
+            // Extract first 4 bytes from intent.data
+            // For calldata bytes, we copy to memory first for safe access
+            bytes memory dataCopy = intent.data;
+            bytes4 selector = bytes4(dataCopy);
 
             bool selectorAllowed = false;
             for (uint256 i = 0; i < policy.allowedSelectors.length; i++) {
@@ -124,15 +123,4 @@ abstract contract BaseIntentValidator is IIntentValidator {
     function _checkFunds(IntentTypes.Intent calldata /*intent*/) internal view virtual returns (bytes1) {
         return StatusCodes.STATUS_SUCCESS;
     }
-}
-
-{
-  "cells": [],
-  "metadata": {
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "nbformat": 4,
-  "nbformat_minor": 2
 }
