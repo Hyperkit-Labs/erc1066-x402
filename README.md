@@ -140,11 +140,11 @@ graph TB
 The gateway supports **any EVM-compatible chain** via Chainlist. Tested networks:
 
 - **Hyperion Testnet** (Chain ID: 133717) ✅ [Deployed](https://hyperion-testnet-explorer.metisdevops.link/address/0x92C73F9f972Bb0bdC8e3c5411345695F2E3710D0)
-- **Metis Sepolia** (Chain ID: 59902)
+- **Metis Sepolia** (Chain ID: 59902) ✅ [Deployed](https://sepolia-explorer.metisdevops.link/address/0xE331CdA35e2e9861e7E8F4aB2663a58F434715f3)
 - **Metis Andromeda Mainnet** (Chain ID: 1088)
-- **Mantle Testnet** (Chain ID: 5003)
+- **Mantle Testnet** (Chain ID: 5003) ✅ [Deployed](https://explorer.testnet.mantle.xyz/address/0xD991F25A5327EBB8A6482eE6a92E7CcE2068B733) | ✅ Verified
 - **Mantle Mainnet** (Chain ID: 5000)
-- **Avalanche Fuji** (Chain ID: 43113)
+- **Avalanche Fuji** (Chain ID: 43113) ✅ [Deployed](https://testnet.snowtrace.io/address/0x76837E513b3e6E6eFc828757764Ed5d0Fd24f2dE) | ✅ Verified
 - **Avalanche C-Chain** (Chain ID: 43114)
 
 **Network-Agnostic Design**: The gateway automatically discovers RPC endpoints via [Chainlist](https://chainlist.org), so you can add new networks without code changes. See [Network Configuration](./docs/deployment/NETWORKS.md) for details.
