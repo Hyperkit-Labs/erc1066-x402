@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {IIntentValidator} from "./IIntentValidator.sol";
 import {IntentTypes} from "./IntentTypes.sol";
 import {StatusCodes} from "./StatusCodes.sol";
@@ -55,15 +55,4 @@ contract IntentExecutor is ReentrancyGuard {
         emit IntentExecuted(intentHash, status, msg.sender, ret);
         return ret;
     }
-}
-
-{
-  "cells": [],
-  "metadata": {
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "nbformat": 4,
-  "nbformat_minor": 2
 }
