@@ -1,0 +1,26 @@
+[profile.default]
+src = "contracts"
+out = "out"
+libs = ["lib"]
+solc = "0.8.24"
+optimizer = true
+optimizer_runs = 200
+via_ir = false
+evm_version = "paris"
+remappings = [
+    "@openzeppelin/=lib/openzeppelin-contracts/",
+]
+
+[profile.ci]
+fuzz = { runs = 10000 }
+invariant = { runs = 1000 }
+
+[rpc_endpoints]
+hyperion_testnet = "https://hyperion-testnet.metisdevops.link"
+metis_sepolia = "https://metis-sepolia-rpc.publicnode.com"
+metis_mainnet = "https://andromeda.metis.io/?owner=1088"
+mantle_testnet = "https://rpc.sepolia.mantle.xyz"
+mantle_mainnet = "https://rpc.mantle.xyz"
+avalanche_fuji = "https://api.avax-test.network/ext/bc/C/rpc"
+avalanche_mainnet = "https://api.avax.network/ext/bc/C/rpc"
+
