@@ -1,0 +1,52 @@
+{
+  "133717": {
+    "chainId": 133717,
+    "name": "Hyperion Testnet",
+    "policyRegistry": "0x92C73F9f972Bb0bdC8e3c5411345695F2E3710D0",
+    "validator": "0xE754b6Ce911511A0D7b3A5d2d367dB305B7a7f24",
+    "executor": "0xb078FaFE12dd9A9F2429b921Fe0fF5365AbA3cF7"
+  },
+  "59902": {
+    "chainId": 59902,
+    "name": "Metis Sepolia",
+    "policyRegistry": "",
+    "validator": "",
+    "executor": ""
+  },
+  "1088": {
+    "chainId": 1088,
+    "name": "Metis Andromeda Mainnet",
+    "policyRegistry": "",
+    "validator": "",
+    "executor": ""
+  },
+  "5003": {
+    "chainId": 5003,
+    "name": "Mantle Testnet",
+    "policyRegistry": "",
+    "validator": "",
+    "executor": ""
+  },
+  "5000": {
+    "chainId": 5000,
+    "name": "Mantle Mainnet",
+    "policyRegistry": "",
+    "validator": "",
+    "executor": ""
+  },
+  "43113": {
+    "chainId": 43113,
+    "name": "Avalanche Fuji",
+    "policyRegistry": "",
+    "validator": "",
+    "executor": ""
+  },
+  "43114": {
+    "chainId": 43114,
+    "name": "Avalanche C-Chain",
+    "policyRegistry": "",
+    "validator": "",
+    "executor": ""
+  }
+}
+

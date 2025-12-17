@@ -11,11 +11,11 @@ library StatusCodes {
 
     // Authorization / Policy
     bytes1 internal constant STATUS_DISALLOWED = 0x10; // Policy or role denies
-    bytes1 internal constant STATUS_ALLOWED = 0x11;    // Policy permits
+    bytes1 internal constant STATUS_ALLOWED = 0x11; // Policy permits
 
     // Timing / State
     bytes1 internal constant STATUS_TOO_EARLY = 0x20; // Before start time / epoch
-    bytes1 internal constant STATUS_TOO_LATE = 0x21;  // After deadline / expiry
+    bytes1 internal constant STATUS_TOO_LATE = 0x21; // After deadline / expiry
     bytes1 internal constant STATUS_NONCE_USED = 0x22; // Nonce already used
 
     // Funds / Payment
@@ -30,24 +30,11 @@ library StatusCodes {
 
     /// @notice Returns true if the status represents success
     function isSuccess(bytes1 status) internal pure returns (bool) {
-        return status == STATUS_SUCCESS
-            || status == STATUS_ALLOWED
-            || status == STATUS_TRANSFER_SUCCESS;
+        return status == STATUS_SUCCESS || status == STATUS_ALLOWED || status == STATUS_TRANSFER_SUCCESS;
     }
 
     /// @notice Returns true if the status represents failure
     function isFailure(bytes1 status) internal pure returns (bool) {
         return !isSuccess(status);
     }
-}
-
-{
-  "cells": [],
-  "metadata": {
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "nbformat": 4,
-  "nbformat_minor": 2
 }

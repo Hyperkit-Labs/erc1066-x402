@@ -1,18 +1,50 @@
-# Build and Release Folders
+# Foundry
+out/
+cache/
+broadcast/
+lib/
+forge-cache/
+
+# Node
+node_modules/
+package-lock.json
+.env
+.env.local
+.npmrc
+**/.npmrc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
 bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
-
-# Other files and folders
 .settings/
-
-# Executables
 *.swf
 *.air
 *.ipa
 *.apk
 
+# Package build outputs
+packages/*/dist/
+packages/*/build/
+packages/*/*.egg-info/
+packages/*/__pycache__/
+packages/*/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+packages/sdk-ts/.npmrc

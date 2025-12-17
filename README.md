@@ -1,281 +1,401 @@
-## 1. Documentation
-### 1.1. Overview
-A set of Ethereum-compatible smart contracts that standardize **status codes**, **policy checks**, and **intent validation** for Web3 transactions, designed to integrate cleanly with an HTTP/x402 gateway and agent layer.
+<div align="center">
+  <img src="public/banner/ERC1066 X402.png" alt="ERC-1066-x402 Banner" width="800">
+</div>
 
-High‑level goals:
+# ERC-1066-x402
 
-- Provide a **small, opinionated subset of ERC‑1066** status codes tailored to intents/AA/payments.  
-- Standardize **pre-flight validation** (`canExecute`) for intents/txs with machine‑readable status.  
-- Define **policy objects** (limits, permissions, chains, assets) enforceable at the contract level.  
-- Be **modular** and **composable** with existing protocols: no lock‑in to specific chains or gateways.
+<!-- Badges: start -->
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-0.1.0-brightgreen)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+<!-- Badges: end -->
 
-***
+## What is this?
 
-### 1.2. Primary personas
+ERC-1066-x402 is a set of Ethereum-compatible smart contracts that standardize **status codes**, **policy checks**, and **intent validation** for Web3 transactions. It integrates with an HTTP/x402 gateway and agent layer to provide machine-readable status codes for autonomous decision-making.
 
-1. **Protocol Devs / Integrators**
-   - Want: simple interface to check if an intent/operation is allowed, and why it fails.
-   - Outcome: fewer unexpected reverts, better UX, easier agent integrations.
+**Key Features:**
+- ✅ Standardized ERC-1066 status codes for intents/AA/payments
+- ✅ Pre-flight validation (`canExecute`) with machine-readable status
+- ✅ Policy-based access control (limits, permissions, chains, assets)
+- ✅ Network-agnostic gateway using [Chainlist](https://chainlist.org) for automatic RPC discovery
+- ✅ TypeScript and Python SDKs for easy integration
+- ✅ Multi-chain support (7+ networks tested)
 
-2. **Agent / Wallet / AA Frameworks**
-   - Want: machine-readable codes to decide: pay, retry, route elsewhere, ask user.
-   - Outcome: more autonomous behavior and predictable flows.
+## Why ERC1066-x402?
 
-3. **x402 / HTTP Gateway Developers**
-   - Want: a direct mapping from onchain status → HTTP/x402 responses.
-   - Outcome: consistent error/payment semantics across chains and services.
+### Standardized Semantics vs. Custom Contracts
 
-***
+**Without ERC1066-x402:**
+- Each project implements custom error strings and status handling
+- AI agents must parse unstructured error messages
+- No standardized way to handle payment requirements (x402)
+- Gas waste from verbose error strings
+- Difficult to monitor and aggregate across protocols
 
-### 1.3. Core concepts
+**With ERC1066-x402:**
+- **Machine-readable status codes** (`0x01`, `0x10`, `0x54`) that agents can branch on directly
+- **Standardized x402 integration** - `0x54` (INSUFFICIENT_FUNDS) maps to HTTP 402 with `X-Payment-Required` header
+- **Gas-efficient** - single-byte status codes vs. string errors
+- **Cross-protocol monitoring** - aggregate status codes across all deployments
+- **Pre-flight validation** - check if intent will succeed before spending gas
 
-#### 1.3.1. Status codes (ERC‑1066–derived)
+### Real-World Benefits
 
-Define a **canonical subset** of ERC‑1066 codes for intents:
+1. **AI Agent Autonomy**: Agents can make decisions based on status codes without parsing error messages
+   ```python
+   if result.status == "0x54":  # INSUFFICIENT_FUNDS
+       request_payment()
+   elif result.status == "0x01":  # SUCCESS
+       execute()
+   ```
 
-- **Generic**
-  - `0x00` FAILURE  
-  - `0x01` SUCCESS  
+2. **Reduced Gas Costs**: Single-byte status codes save ~200-500 gas per validation vs. string errors
 
-- **Authorization / Policy**
-  - `0x10` DISALLOWED (policy or role denies)  
-  - `0x11` ALLOWED (policy permits)  
+3. **Easier Monitoring**: Standardized codes enable cross-protocol analytics and alerting
 
-- **Funds / Payment**
-  - `0x54` INSUFFICIENT_FUNDS  
-  - `0x50` TRANSFER_FAILED  
-  - `0x51` TRANSFER_SUCCESSFUL  
+4. **x402 Compliance**: Built-in HTTP 402 mapping for payment-required scenarios
 
-- **Timing / State**
-  - `0x20` TOO_EARLY (before start time / epoch)  
-  - `0x21` TOO_LATE (after deadline / expiry)  
+## Project Status
 
-- **Application‑reserved**
-  - `0xA0` INTENT_INVALID_FORMAT  
-  - `0xA1` UNSUPPORTED_ACTION  
-  - `0xA2` UNSUPPORTED_CHAIN  
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Smart Contracts | ✅ Production-ready | Deployed to Hyperion Testnet, [View on Explorer](https://hyperion-testnet-explorer.metisdevops.link/address/0x92C73F9f972Bb0bdC8e3c5411345695F2E3710D0) |
+| Gateway Service | ✅ Beta | Network-agnostic, Chainlist integration |
+| Python SDK | ✅ Published | Available on PyPI as `hyperkitlabs-erc1066-x402` |
+| TypeScript SDK | ⏳ Ready | Pending npm publication |
+| Test Coverage | ✅ 38/38 passing | Unit + integration tests, gas reports available |
+| Security | ✅ OpenZeppelin contracts | Using audited libraries, reentrancy guards, access controls |
 
-These codes MUST be:
+## Quick Start
 
-- Exposed as `bytes1` constants in a base contract.
-- Returned by all validator functions and used in `revert` paths where appropriate.
+### 1. Clone and Install
 
-***
+```bash
+git clone https://github.com/hyperkit-labs/erc1066-x402.git
+cd erc1066-x402
+npm install
+forge install
+```
 
-#### 1.3.2. Intent model (onchain view)
+### 2. Run Tests
 
-Onchain contracts only need a **minimal, stable intent shape**, represented as a struct:
+```bash
+npm test
+```
 
-```solidity
-struct Intent {
-    address sender;          // original user / session key
-    address target;          // contract to call
-    bytes   data;            // calldata for target
-    uint256 value;           // msg.value or token value
-    uint256 nonce;           // replay protection
-    uint256 validAfter;      // earliest timestamp
-    uint256 validBefore;     // latest timestamp
-    bytes32 policyId;        // reference to policy definition
+### 3. Deploy Contracts
+
+```bash
+# Set your private key
+export PRIVATE_KEY=your_private_key_here
+
+# Deploy to Hyperion Testnet
+npm run deploy:hyperion:testnet
+```
+
+### 4. Start Gateway
+
+```bash
+cd packages/gateway
+cp env.template .env
+# Edit .env with your contract addresses
+npm run dev
+```
+
+**For detailed setup, see [GETTING_STARTED.md](./GETTING_STARTED.md)**
+
+## Architecture
+
+```mermaid
+graph TB
+    subgraph OffChain[Off-Chain Layer]
+        Gateway[Gateway Service<br/>TypeScript/Fastify]
+        SDK_TS[TypeScript SDK]
+        SDK_PY[Python SDK]
+        Agents[AI Agents/Wallets]
+    end
+    
+    subgraph OnChain[On-Chain Layer]
+        Executor[IntentExecutor]
+        Validator[BaseIntentValidator]
+        Registry[PolicyRegistry]
+        StatusCodes[StatusCodes Library]
+    end
+    
+    Agents --> SDK_TS
+    Agents --> SDK_PY
+    SDK_TS --> Gateway
+    SDK_PY --> Gateway
+    Gateway --> Executor
+    Executor --> Validator
+    Validator --> Registry
+    Validator --> StatusCodes
+```
+
+**See [Architecture Overview](./docs/reference/Overview.md) for detailed diagrams.**
+
+## Supported Networks
+
+The gateway supports **any EVM-compatible chain** via Chainlist. Tested networks:
+
+- **Hyperion Testnet** (Chain ID: 133717) ✅ [Deployed](https://hyperion-testnet-explorer.metisdevops.link/address/0x92C73F9f972Bb0bdC8e3c5411345695F2E3710D0)
+- **Metis Sepolia** (Chain ID: 59902)
+- **Metis Andromeda Mainnet** (Chain ID: 1088)
+- **Mantle Testnet** (Chain ID: 5003)
+- **Mantle Mainnet** (Chain ID: 5000)
+- **Avalanche Fuji** (Chain ID: 43113)
+- **Avalanche C-Chain** (Chain ID: 43114)
+
+**Network-Agnostic Design**: The gateway automatically discovers RPC endpoints via [Chainlist](https://chainlist.org), so you can add new networks without code changes. See [Network Configuration](./docs/deployment/NETWORKS.md) for details.
+
+## Documentation
+
+📚 **[Complete Documentation Index](./docs/README.md)**
+
+### Essential Guides
+
+- **[Getting Started](./GETTING_STARTED.md)** - First-time setup guide
+- **[Quick Start Guide](./docs/QUICK_START_COMPLETE.md)** - Complete step-by-step walkthrough
+- **[Deployment Guide](./docs/deployment/DEPLOYMENT_GUIDE.md)** - Multi-chain deployment
+- **[Network-Agnostic Architecture](./docs/architecture/NETWORK_AGNOSTIC.md)** - Chainlist integration
+
+### Integration
+
+- **[Gateway Integration](./docs/integration/GATEWAY.md)** - Gateway service setup
+- **[Agent Integration](./docs/integration/AGENTS.md)** - AI agent integration
+- **[Custom Networks](./docs/integration/CUSTOM_NETWORKS.md)** - Adding unlisted networks
+
+### SDKs
+
+- **[Python SDK](./docs/sdk/PYTHON_SDK_USAGE.md)** - Installation and usage
+- **[TypeScript SDK](./packages/sdk-ts/README.md)** - Installation and usage
+
+### Examples
+
+- **[Basic Usage](./docs/examples/basic-usage.md)** - Simple examples
+- **[Policy Setup](./docs/examples/policy-setup.md)** - Policy configuration
+
+## Installation
+
+### Smart Contracts
+
+```bash
+npm install
+forge install
+```
+
+### Gateway Service
+
+```bash
+cd packages/gateway
+npm install
+```
+
+### Python SDK
+
+```bash
+pip install hyperkitlabs-erc1066-x402
+```
+
+### TypeScript SDK
+
+```bash
+npm install @hyperkit/erc1066-x402-sdk
+```
+
+## Featured Examples
+
+### AI Agent Payment Flow
+
+An AI agent uses ERC1066-x402 to handle payment-required scenarios:
+
+```python
+from erc1066_x402 import ERC1066Client, Intent
+
+client = ERC1066Client("https://gateway.example.com")
+
+intent = Intent(
+    sender="0x...",
+    target="0x...",
+    data="0x...",
+    value="1000000000000000",  # 0.001 ETH
+    nonce="1",
+    policyId="0x..."
+)
+
+# Pre-flight validation
+result = client.validate_intent(intent, chain_id=133717)
+
+if result.status == "0x54":  # INSUFFICIENT_FUNDS
+    # Gateway returns HTTP 402 with X-Payment-Required header
+    # Agent requests payment from user
+    payment_url = f"{gateway_url}/pay?intent={intent_hash}"
+    request_payment(payment_url)
+elif result.status == "0x01":  # SUCCESS
+    # Execute immediately
+    client.execute_intent(intent, chain_id=133717)
+elif result.status == "0x20":  # TOO_EARLY
+    # Retry after Retry-After header delay
+    retry_after = result.httpCode == 202
+    schedule_retry(retry_after)
+```
+
+### Gateway Integration
+
+The gateway automatically maps status codes to HTTP responses:
+
+```typescript
+// Gateway receives intent validation request
+POST /intents/validate
+{
+  "sender": "0x...",
+  "target": "0x...",
+  "value": "1000000000000000"
+}
+
+// If balance insufficient, returns:
+HTTP 402 Payment Required
+X-Payment-Required: true
+{
+  "status": "0x54",
+  "intentHash": "0x...",
+  "message": "Insufficient funds"
 }
 ```
 
-The full off-chain/agent intent can be richer; the onchain layer just needs these fields.
+### Multi-Chain Deployment
 
-***
+Deploy once, use across all supported chains:
 
-#### 1.3.3. Policy model
+```bash
+# Deploy to multiple networks
+npm run deploy:hyperion:testnet
+npm run deploy:metis:sepolia
+npm run deploy:mantle:testnet
 
-Policies describe **who may do what, where, and how much**:
-
-- `allowedTargets`: list / bitmap / registry of callable contracts.  
-- `allowedSelectors`: optional restriction to specific function selectors.  
-- `maxValuePerTx`: max ETH/token value per execution.  
-- `maxAggregateValue`: optional rolling cap per period.  
-- `allowedChains`: set of chain IDs (if relevant in cross-chain context).  
-- `role` / `owner`: authority that can update / revoke policy.
-
-Policies live as:
-
-- Onchain storage in a `PolicyRegistry` contract, keyed by `policyId` (bytes32).
-- Optionally, minimal hash references to off-chain expanded definitions (for future extension).
-
-***
-
-### 1.4. Functional requirements
-
-#### FR1. Status code base
-
-- FR1.1: Provide a `StatusCodes` contract exposing a set of `bytes1` constants representing the canonical subset (sec 1.3.1).
-- FR1.2: Status codes MUST be used consistently across:
-  - Intent validation,
-  - Policy checks,
-  - Execution wrappers.
-
-#### FR2. Intent validation interface
-
-- FR2.1: Define a standard interface:
-
-```solidity
-interface IIntentValidator {
-    function canExecute(Intent calldata intent)
-        external
-        view
-        returns (bytes1 status);
-}
+# Gateway automatically discovers RPCs via Chainlist
+# No hardcoded network configs needed
 ```
 
-- FR2.2: `canExecute` MUST:
-  - Validate time window (`validAfter`, `validBefore`).
-  - Validate nonce (via an internal nonce manager or AA framework).
-  - Validate policy via `PolicyRegistry`.
-  - Optionally, simulate balance/allowance if applicable.
-- FR2.3: If ANY check fails, `canExecute` MUST return a specific status code from the canonical set.
+## Usage Examples
 
-#### FR3. Policy registry
+### Python SDK
 
-- FR3.1: Provide a `PolicyRegistry` contract with:
-  - `function setPolicy(bytes32 policyId, Policy calldata policy)` only callable by admin/owner.
-  - `function getPolicy(bytes32 policyId) external view returns (Policy memory)`.
-- FR3.2: Policies MUST include at least:
-  - Allowed targets / selectors,
-  - Value caps,
-  - Time constraints (optional, if different from intent’s).
-- FR3.3: Policies MUST be immutable per `policyId` or versioned (e.g., new `policyId`) to avoid breaking intent signatures.
+```python
+from erc1066_x402 import ERC1066Client, Intent
 
-#### FR4. Execution wrapper
+client = ERC1066Client("http://localhost:3001")
 
-- FR4.1: Provide an `IntentExecutor` contract that:
-  - Calls `canExecute(intent)` on a configured validator.
-  - If status != `SUCCESS`, reverts with encoded status (e.g., custom error `ExecutionDenied(bytes1 status)`).
-  - If status == `SUCCESS`, forwards call to `intent.target` with `intent.data` and `intent.value`.
-- FR4.2: `IntentExecutor` MUST emit an event including:
-  - `intentHash`,
-  - `status`,
-  - gasUsed (best effort),
-  - any relevant metadata (chain ID, policyId).
+intent = Intent(
+    sender="0x...",
+    target="0x...",
+    data="0x...",
+    value="0",
+    nonce="1",
+    policyId="0x..."
+)
 
-#### FR5. Extensibility and composability
+result = client.validate_intent(intent, chain_id=133717)
+if result.status == "0x01":
+    client.execute_intent(intent, chain_id=133717)
+```
 
-- FR5.1: The system MUST be deployable standalone (no hard dependency on specific AA framework).
-- FR5.2: Validator MUST be pluggable:
-  - Different deployments can swap validators (e.g., ERC‑4337, custom DEX policies).
-- FR5.3: Contracts MUST be ERC‑165‑compatible for feature detection where appropriate.
+### TypeScript SDK
 
-***
+```typescript
+import { ERC1066Client } from '@hyperkit/erc1066-x402-sdk';
 
-### 1.5. Non-functional requirements
+const client = new ERC1066Client('http://localhost:3001');
+const result = await client.validateIntent(intent, 133717);
+```
 
-- NFR1: **Gas efficiency** validation and status checks should be cheaper than a failed onchain execution wherever possible.
-- NFR2: **Auditability** code must be structured and documented with audits in mind; minimal complexity, clear separation between policy, status, and execution.
-- NFR3: **Upgrade pattern** favor:
-  - Versioned contracts or
-  - Minimal proxies behind immutable interfaces, with careful upgrade governance.
+## Development
 
-***
+### Branch Strategy
 
-## 2. Technical — Design & Implementation Notes
+- **`main`** - Production-ready code (protected, requires PR + reviews)
+- **`develop`** - Integration branch for feature development
+- **`feature/*`** - Feature branches (merge to `develop`)
 
-### 2.1. Contracts breakdown
+See [Development Guide](./docs/DEVELOPMENT.md) for details.
 
-**2.1.1. `StatusCodes.sol`**
+### Running Tests
 
-- Pure library or abstract contract:
-  - `bytes1 constant STATUS_SUCCESS = 0x01;`
-  - `bytes1 constant STATUS_FAILURE = 0x00;`
-  - etc.
-- Optionally, helper functions:
-  - `function isSuccess(bytes1 status) internal pure returns (bool)`
-  - `function isFailure(bytes1 status) internal pure returns (bool)`
+```bash
+# All tests
+npm test
 
-***
+# Contract tests only
+forge test
 
-**2.1.2. `IntentTypes.sol`**
+# With coverage
+npm run test:coverage
+```
 
-- Define `struct Intent` and `struct Policy`.
-- Keep ABI stable; any change → new versioned file (`IntentTypesV2.sol`).
+### Contributing
 
-***
+We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
-**2.1.3. `PolicyRegistry.sol`**
+## Troubleshooting
 
-- Mapping: `mapping(bytes32 => Policy) private policies;`
-- Access control:
-  - `Ownable` or `AccessControl` (minimal) for admin.
-- Events:
-  - `event PolicySet(bytes32 indexed policyId, address indexed setter);`
+### Common Issues
 
-***
+**Gateway won't start:**
+- Check that port 3001 is available: `lsof -i :3001`
+- Verify `.env` file exists and has correct contract addresses
+- Ensure RPC URLs are accessible
 
-**2.1.4. `BaseIntentValidator.sol`**
+**Contracts fail to deploy:**
+- Verify `PRIVATE_KEY` has `0x` prefix (scripts handle this automatically)
+- Check you have testnet tokens for gas
+- Verify RPC endpoint is correct
 
-- Abstract contract implementing common checks:
-  - Time window validation.
-  - Chain ID / domain separation if relevant.
-- Internal hooks:
-  - `_checkPolicy(Intent calldata intent) internal view returns (bytes1);`
-  - `_checkFunds(Intent calldata intent) internal view returns (bytes1);`
-- Concrete validators (`AAIntentValidator.sol`, `DexIntentValidator.sol`) override hooks.
+**SDK import errors:**
+- Python: Ensure virtual environment is activated
+- TypeScript: Run `npm install` in SDK directory
 
-***
+**For more help:** See [Troubleshooting Guide](./docs/TROUBLESHOOTING.md)
 
-**2.1.5. `IntentExecutor.sol`**
+## Status Codes → HTTP/x402 Mapping
 
-- Holds reference to:
-  - `IIntentValidator validator;`
-- Flow:
-  1. Compute `bytes32 intentHash = keccak256(abi.encode(intent));`
-  2. Call `validator.canExecute(intent)`.
-  3. If not success: `revert ExecutionDenied(status);`
-  4. Execute low-level call:
+ERC1066-x402 maps onchain status codes to HTTP/x402 responses, enabling seamless integration with payment gateways and AI agents.
 
-     ```solidity
-     (bool ok, bytes memory ret) = intent.target.call{value: intent.value}(intent.data);
-     if (!ok) {
-         revert ExecutionFailed(STATUS_TRANSFER_FAILED, ret);
-     }
-     ```
+| Status Code | Meaning | HTTP Code | Headers | Agent Action |
+|-------------|---------|-----------|---------|--------------|
+| `0x01` | SUCCESS | 200 | - | Execute immediately |
+| `0x11` | ALLOWED | 200 | - | Execute immediately |
+| `0x10` | DISALLOWED | 403 | - | Deny, inform user |
+| `0x54` | INSUFFICIENT_FUNDS | **402** | `X-Payment-Required: true` | Request payment |
+| `0x20` | TOO_EARLY | 202 | `Retry-After: 60` | Retry later |
+| `0x21` | TOO_LATE | 410 | - | Reject, expired |
+| `0x22` | NONCE_USED | 409 | - | Reject, replay detected |
+| `0x50` | TRANSFER_FAILED | 500 | - | Retry or investigate |
+| `0xA0` | INVALID_FORMAT | 400 | - | Fix intent structure |
+| `0xA2` | UNSUPPORTED_CHAIN | 421 | - | Use different chain |
 
-  5. Emit `IntentExecuted(intentHash, status, msg.sender);`
+**Key Insight**: The `0x54` → HTTP 402 mapping enables standardized payment flows. When an agent receives HTTP 402 with `X-Payment-Required`, it knows to request payment before retrying.
 
-***
+See [Status Codes Specification](./docs/spec/status-codes.md) for complete list.
 
-### 2.2. Status ↔ Behavior mapping
+## License
 
-- `0x01` (SUCCESS): Execution allowed; gateway can treat as `200 OK` or app‑specific success.
-- `0x54` (INSUFFICIENT_FUNDS): Contracts MUST NOT attempt execution; gateway maps to x402‑style “Payment Required / Insufficient balance”.
-- `0x10` (DISALLOWED): Policy violation; gateway can show “Forbidden” (like HTTP 403).
-- `0x20` (TOO_EARLY) & `0x21` (TOO_LATE): Gateway can indicate scheduling or expiry problems.
+MIT License - see [LICENSE](./LICENSE) for details.
 
-This mapping is explicitly documented in the off-chain spec, but the **onchain contracts only care about codes**.
+## Links
 
-***
+- **Documentation**: [docs/README.md](./docs/README.md)
+- **Issues**: [GitHub Issues](https://github.com/hyperkit-labs/erc1066-x402/issues)
+- **Contributing**: [CONTRIBUTING.md](./CONTRIBUTING.md)
+- **Changelog**: [CHANGELOG.md](./CHANGELOG.md)
 
-### 2.3. Security considerations
+---
 
-- Nonces:
-  - Either integrate with ERC‑4337 nonce semantics or maintain own `mapping(address => uint256) nonces`.
-  - Validation MUST reject reused nonces with a dedicated status (consider `0x22 NONCE_USED`).
+## Technical Details
 
-- Reentrancy:
-  - `IntentExecutor` should use `nonReentrant` guard if it holds funds / complex state.
-  - External target calls must be carefully sandboxed (no assumption about target behavior).
+For detailed technical specifications, see:
 
-- Upgradability:
-  - Treat validator/executor as versioned; don’t over‑engineer proxies at v1.
-  - Emit clear events for version changes.
-
-***
-
-### 2.4. Testing strategy
-
-- Unit tests (Foundry/Hardhat):
-  - Status code correctness and invariants.
-  - All branches of `canExecute` (per code path).
-  - Policy changes and enforcement.
-  - Executor behavior: success, each failure type, event emission.
-
-- Integration tests:
-  - Full flow: construct intent → `canExecute` → `execute` → verify onchain and emitted status.
-  - Mock gateway that reads status and asserts expected HTTP/x402 mapping (even if off-chain, just to lock semantics).
-
-***
+- [Functional Requirements](./docs/reference/architecture.md#functional-requirements)
+- [Contract Breakdown](./docs/reference/architecture.md#contracts-breakdown)
+- [Security Considerations](./docs/reference/architecture.md#security-considerations)
+- [Testing Strategy](./docs/reference/architecture.md#testing-strategy)

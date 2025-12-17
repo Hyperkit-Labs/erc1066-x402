@@ -1,0 +1,26 @@
+name: Deploy to Testnet
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+      - name: Install dependencies
+        run: forge install
+      - name: Deploy to Metis Testnet
+        env:
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+        run: |
+          forge script script/Deploy.s.sol:Deploy --rpc-url metis_testnet --broadcast --verify
+      - name: Deploy to Avalanche Fuji
+        env:
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+        run: |
+          forge script script/Deploy.s.sol:Deploy --rpc-url avalanche_fuji --broadcast --verify
+

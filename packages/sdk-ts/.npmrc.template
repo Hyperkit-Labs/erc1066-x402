@@ -1,0 +1,12 @@
+# npm Configuration Template
+# Copy this to .npmrc and add your token
+
+# Option 1: Use environment variable (recommended for CI/CD)
+//registry.npmjs.org/:_authToken=${NPM_TOKEN}
+
+# Option 2: Use token directly (not recommended, use .gitignore)
+# //registry.npmjs.org/:_authToken=your_token_here
+
+# Scope configuration
+@hyperkit:registry=https://registry.npmjs.org/
+

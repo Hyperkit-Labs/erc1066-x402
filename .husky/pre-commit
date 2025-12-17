@@ -1,0 +1,19 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running pre-commit checks..."
+
+echo "Checking Solidity formatting..."
+forge fmt --check || {
+    echo "Formatting check failed. Run 'forge fmt' to fix."
+    exit 1
+}
+
+echo "Running quick tests..."
+forge test --no-match-test "testFork" || {
+    echo "Tests failed. Fix issues before committing."
+    exit 1
+}
+
+echo "Pre-commit checks passed!"
+
