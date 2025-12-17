@@ -31,7 +31,8 @@ contract PolicyRegistryTest is Test {
     function test_setPolicy_immutability() public {
         bytes32 policyId = keccak256("test-policy");
         IntentTypes.Policy memory policy1 = TestHelpers.createPolicyWithDefaults(owner);
-        IntentTypes.Policy memory policy2 = TestHelpers.createPolicy(owner, new address[](0), new bytes4[](0), 100, 0, 0, 0, new uint256[](0));
+        IntentTypes.Policy memory policy2 =
+            TestHelpers.createPolicy(owner, new address[](0), new bytes4[](0), 100, 0, 0, 0, new uint256[](0));
 
         registry.setPolicy(policyId, policy1);
 
@@ -44,16 +45,8 @@ contract PolicyRegistryTest is Test {
         address[] memory targets = new address[](1);
         targets[0] = address(0x1);
 
-        IntentTypes.Policy memory policy = TestHelpers.createPolicy(
-            owner,
-            targets,
-            new bytes4[](0),
-            1000,
-            0,
-            0,
-            0,
-            new uint256[](0)
-        );
+        IntentTypes.Policy memory policy =
+            TestHelpers.createPolicy(owner, targets, new bytes4[](0), 1000, 0, 0, 0, new uint256[](0));
 
         registry.setPolicy(policyId, policy);
         IntentTypes.Policy memory retrieved = registry.getPolicy(policyId);
