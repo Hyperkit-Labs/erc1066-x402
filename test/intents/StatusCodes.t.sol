@@ -32,19 +32,19 @@ contract StatusCodesTest is Test {
     }
 
     function test_allStatusCodesAreDefined() public {
-        assertEq(StatusCodes.STATUS_FAILURE, 0x00);
-        assertEq(StatusCodes.STATUS_SUCCESS, 0x01);
-        assertEq(StatusCodes.STATUS_DISALLOWED, 0x10);
-        assertEq(StatusCodes.STATUS_ALLOWED, 0x11);
-        assertEq(StatusCodes.STATUS_TOO_EARLY, 0x20);
-        assertEq(StatusCodes.STATUS_TOO_LATE, 0x21);
-        assertEq(StatusCodes.STATUS_NONCE_USED, 0x22);
-        assertEq(StatusCodes.STATUS_TRANSFER_FAILED, 0x50);
-        assertEq(StatusCodes.STATUS_TRANSFER_SUCCESS, 0x51);
-        assertEq(StatusCodes.STATUS_INSUFFICIENT_FUNDS, 0x54);
-        assertEq(StatusCodes.STATUS_INTENT_INVALID_FORMAT, 0xA0);
-        assertEq(StatusCodes.STATUS_UNSUPPORTED_ACTION, 0xA1);
-        assertEq(StatusCodes.STATUS_UNSUPPORTED_CHAIN, 0xA2);
+        assertEq(uint8(StatusCodes.STATUS_FAILURE), uint8(0x00));
+        assertEq(uint8(StatusCodes.STATUS_SUCCESS), uint8(0x01));
+        assertEq(uint8(StatusCodes.STATUS_DISALLOWED), uint8(0x10));
+        assertEq(uint8(StatusCodes.STATUS_ALLOWED), uint8(0x11));
+        assertEq(uint8(StatusCodes.STATUS_TOO_EARLY), uint8(0x20));
+        assertEq(uint8(StatusCodes.STATUS_TOO_LATE), uint8(0x21));
+        assertEq(uint8(StatusCodes.STATUS_NONCE_USED), uint8(0x22));
+        assertEq(uint8(StatusCodes.STATUS_TRANSFER_FAILED), uint8(0x50));
+        assertEq(uint8(StatusCodes.STATUS_TRANSFER_SUCCESS), uint8(0x51));
+        assertEq(uint8(StatusCodes.STATUS_INSUFFICIENT_FUNDS), uint8(0x54));
+        assertEq(uint8(StatusCodes.STATUS_INTENT_INVALID_FORMAT), uint8(0xA0));
+        assertEq(uint8(StatusCodes.STATUS_UNSUPPORTED_ACTION), uint8(0xA1));
+        assertEq(uint8(StatusCodes.STATUS_UNSUPPORTED_CHAIN), uint8(0xA2));
     }
 }
 
