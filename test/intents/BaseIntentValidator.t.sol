@@ -28,16 +28,8 @@ contract BaseIntentValidatorTest is Test {
         IntentTypes.Policy memory policy = TestHelpers.createPolicyWithDefaults(owner);
         registry.setPolicy(policyId, policy);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            "",
-            0,
-            0,
-            block.timestamp + 100,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), "", 0, 0, block.timestamp + 100, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_TOO_EARLY);
@@ -48,32 +40,20 @@ contract BaseIntentValidatorTest is Test {
         IntentTypes.Policy memory policy = TestHelpers.createPolicyWithDefaults(owner);
         registry.setPolicy(policyId, policy);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            "",
-            0,
-            0,
-            0,
-            block.timestamp - 100,
-            policyId
-        );
+        // Set block.timestamp to a known value, then use a validBefore that's in the past
+        vm.warp(100);
+        uint256 pastTimestamp = 99; // Definitely less than block.timestamp (100)
+        
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), "", 0, 0, 0, pastTimestamp, policyId);
 
         bytes1 status = validator.canExecute(intent);
-        assertEq(status, StatusCodes.STATUS_TOO_LATE);
+        assertEq(uint8(status), uint8(StatusCodes.STATUS_TOO_LATE));
     }
 
     function test_canExecute_noPolicy() public {
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            "",
-            0,
-            0,
-            0,
-            0,
-            bytes32(0)
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), "", 0, 0, 0, 0, bytes32(0));
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_DISALLOWED);
@@ -82,27 +62,12 @@ contract BaseIntentValidatorTest is Test {
     function test_canExecute_policyTimeWindow() public {
         bytes32 policyId = keccak256("test-policy");
         IntentTypes.Policy memory policy = TestHelpers.createPolicy(
-            owner,
-            new address[](0),
-            new bytes4[](0),
-            0,
-            0,
-            block.timestamp + 100,
-            0,
-            new uint256[](0)
+            owner, new address[](0), new bytes4[](0), 0, 0, block.timestamp + 100, 0, new uint256[](0)
         );
         registry.setPolicy(policyId, policy);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            "",
-            0,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), "", 0, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_TOO_EARLY);
@@ -113,28 +78,12 @@ contract BaseIntentValidatorTest is Test {
         address[] memory targets = new address[](1);
         targets[0] = address(0x3);
 
-        IntentTypes.Policy memory policy = TestHelpers.createPolicy(
-            owner,
-            targets,
-            new bytes4[](0),
-            0,
-            0,
-            0,
-            0,
-            new uint256[](0)
-        );
+        IntentTypes.Policy memory policy =
+            TestHelpers.createPolicy(owner, targets, new bytes4[](0), 0, 0, 0, 0, new uint256[](0));
         registry.setPolicy(policyId, policy);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            "",
-            0,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), "", 0, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_DISALLOWED);
@@ -145,28 +94,12 @@ contract BaseIntentValidatorTest is Test {
         address[] memory targets = new address[](1);
         targets[0] = address(0x2);
 
-        IntentTypes.Policy memory policy = TestHelpers.createPolicy(
-            owner,
-            targets,
-            new bytes4[](0),
-            0,
-            0,
-            0,
-            0,
-            new uint256[](0)
-        );
+        IntentTypes.Policy memory policy =
+            TestHelpers.createPolicy(owner, targets, new bytes4[](0), 0, 0, 0, 0, new uint256[](0));
         registry.setPolicy(policyId, policy);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            "",
-            0,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), "", 0, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_SUCCESS);
@@ -177,29 +110,13 @@ contract BaseIntentValidatorTest is Test {
         bytes4[] memory selectors = new bytes4[](1);
         selectors[0] = bytes4(0x12345678);
 
-        IntentTypes.Policy memory policy = TestHelpers.createPolicy(
-            owner,
-            new address[](0),
-            selectors,
-            0,
-            0,
-            0,
-            0,
-            new uint256[](0)
-        );
+        IntentTypes.Policy memory policy =
+            TestHelpers.createPolicy(owner, new address[](0), selectors, 0, 0, 0, 0, new uint256[](0));
         registry.setPolicy(policyId, policy);
 
         bytes memory data = abi.encodeWithSelector(bytes4(0x87654321));
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            data,
-            0,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), data, 0, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_DISALLOWED);
@@ -207,28 +124,12 @@ contract BaseIntentValidatorTest is Test {
 
     function test_canExecute_valueExceedsMax() public {
         bytes32 policyId = keccak256("test-policy");
-        IntentTypes.Policy memory policy = TestHelpers.createPolicy(
-            owner,
-            new address[](0),
-            new bytes4[](0),
-            100,
-            0,
-            0,
-            0,
-            new uint256[](0)
-        );
+        IntentTypes.Policy memory policy =
+            TestHelpers.createPolicy(owner, new address[](0), new bytes4[](0), 100, 0, 0, 0, new uint256[](0));
         registry.setPolicy(policyId, policy);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            "",
-            200,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), "", 200, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_INSUFFICIENT_FUNDS);
@@ -239,28 +140,12 @@ contract BaseIntentValidatorTest is Test {
         uint256[] memory chains = new uint256[](1);
         chains[0] = 999;
 
-        IntentTypes.Policy memory policy = TestHelpers.createPolicy(
-            owner,
-            new address[](0),
-            new bytes4[](0),
-            0,
-            0,
-            0,
-            0,
-            chains
-        );
+        IntentTypes.Policy memory policy =
+            TestHelpers.createPolicy(owner, new address[](0), new bytes4[](0), 0, 0, 0, 0, chains);
         registry.setPolicy(policyId, policy);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            "",
-            0,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), "", 0, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_UNSUPPORTED_CHAIN);
@@ -271,16 +156,8 @@ contract BaseIntentValidatorTest is Test {
         IntentTypes.Policy memory policy = TestHelpers.createPolicyWithDefaults(owner);
         registry.setPolicy(policyId, policy);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            "",
-            0,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(address(0x1), address(0x2), "", 0, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_SUCCESS);
