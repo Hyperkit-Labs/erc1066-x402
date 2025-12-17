@@ -11,14 +11,3 @@ interface IIntentValidator {
     /// @return status ERC-1066 style status code
     function canExecute(IntentTypes.Intent calldata intent) external view returns (bytes1 status);
 }
-
-{
-  "cells": [],
-  "metadata": {
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "nbformat": 4,
-  "nbformat_minor": 2
-}
