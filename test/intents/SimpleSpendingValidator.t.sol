@@ -31,16 +31,8 @@ contract SimpleSpendingValidatorTest is Test {
 
         vm.deal(sender, 100 ether);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            sender,
-            address(0x2),
-            "",
-            50 ether,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(sender, address(0x2), "", 50 ether, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_SUCCESS);
@@ -53,16 +45,8 @@ contract SimpleSpendingValidatorTest is Test {
 
         vm.deal(sender, 10 ether);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            sender,
-            address(0x2),
-            "",
-            50 ether,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(sender, address(0x2), "", 50 ether, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_INSUFFICIENT_FUNDS);
@@ -73,16 +57,7 @@ contract SimpleSpendingValidatorTest is Test {
         IntentTypes.Policy memory policy = TestHelpers.createPolicyWithDefaults(owner);
         registry.setPolicy(policyId, policy);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            sender,
-            address(0x2),
-            "",
-            0,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent = TestHelpers.createIntent(sender, address(0x2), "", 0, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_SUCCESS);
@@ -95,16 +70,8 @@ contract SimpleSpendingValidatorTest is Test {
 
         vm.deal(sender, 100 ether);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            sender,
-            address(0x2),
-            "",
-            100 ether,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(sender, address(0x2), "", 100 ether, 0, 0, 0, policyId);
 
         bytes1 status = validator.canExecute(intent);
         assertEq(status, StatusCodes.STATUS_SUCCESS);
@@ -117,16 +84,8 @@ contract SimpleSpendingValidatorTest is Test {
 
         vm.deal(sender, 100 ether);
 
-        IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            sender,
-            address(0x2),
-            "",
-            50 ether,
-            0,
-            0,
-            0,
-            policyId
-        );
+        IntentTypes.Intent memory intent =
+            TestHelpers.createIntent(sender, address(0x2), "", 50 ether, 0, 0, 0, policyId);
 
         vm.prank(sender);
         executor.execute{value: 50 ether}(intent);
