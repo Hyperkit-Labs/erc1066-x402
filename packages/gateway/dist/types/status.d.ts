@@ -1,0 +1,6 @@
+export type StatusCode = "0x00" | "0x01" | "0x10" | "0x11" | "0x20" | "0x21" | "0x22" | "0x50" | "0x51" | "0x54" | "0xA0" | "0xA1" | "0xA2";
+export interface HttpResponse {
+    code: number;
+    headers: Record<string, string>;
+}
+//# sourceMappingURL=status.d.ts.map

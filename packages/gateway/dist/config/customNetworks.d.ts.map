@@ -1,0 +1,1 @@
+{"version":3,"file":"customNetworks.d.ts","sourceRoot":"","sources":["../../src/config/customNetworks.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,MAAM,oBAAoB,CAAC;AAInD,wBAAgB,qBAAqB,CAAC,QAAQ,EAAE,aAAa,GAAG,IAAI,CAEnE;AAED,wBAAgB,gBAAgB,CAAC,OAAO,EAAE,MAAM,GAAG,aAAa,GAAG,SAAS,CAE3E;AAED,wBAAgB,oBAAoB,IAAI,aAAa,EAAE,CAEtD;AAED,wBAAgB,yBAAyB,IAAI,IAAI,CAehD"}

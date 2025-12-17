@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: hyperkitlabs-erc1066-x402
+Version: 0.1.0
+Summary: Python SDK for ERC-1066-x402 gateway
+Author: HyperKit Labs
+Author-email: HyperKit Labs <hyperkitdev@gmail.com>
+Requires-Python: >=3.8
+Requires-Dist: requests>=2.31.0
+Requires-Dist: pydantic>=2.5.0
+Requires-Dist: web3>=6.11.0
+Dynamic: author
+Dynamic: requires-python
