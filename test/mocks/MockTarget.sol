@@ -25,11 +25,12 @@ contract MockTarget {
         if (shouldRevert) {
             revert("MockTarget: intentional revert");
         }
+        bytes memory data = returnData;
         assembly {
             let ptr := mload(0x40)
-            let len := mload(returnData)
+            let len := mload(data)
             mstore(ptr, len)
-            let dataPtr := add(returnData, 0x20)
+            let dataPtr := add(data, 0x20)
             for {
                 let i := 0
             } lt(i, len) {
