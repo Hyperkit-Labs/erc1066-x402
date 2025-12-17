@@ -11,14 +11,7 @@ contract IntentTypesTest is Test {
 
     function test_intentStructEncoding() public {
         IntentTypes.Intent memory intent = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            hex"1234",
-            100,
-            1,
-            1000,
-            2000,
-            bytes32(uint256(0x123))
+            address(0x1), address(0x2), hex"1234", 100, 1, 1000, 2000, bytes32(uint256(0x123))
         );
 
         bytes memory encoded = abi.encode(intent);
@@ -36,25 +29,11 @@ contract IntentTypesTest is Test {
 
     function test_intentHashComputation() public {
         IntentTypes.Intent memory intent1 = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            hex"1234",
-            100,
-            1,
-            1000,
-            2000,
-            bytes32(uint256(0x123))
+            address(0x1), address(0x2), hex"1234", 100, 1, 1000, 2000, bytes32(uint256(0x123))
         );
 
         IntentTypes.Intent memory intent2 = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            hex"1234",
-            100,
-            1,
-            1000,
-            2000,
-            bytes32(uint256(0x123))
+            address(0x1), address(0x2), hex"1234", 100, 1, 1000, 2000, bytes32(uint256(0x123))
         );
 
         bytes32 hash1 = TestHelpers.computeIntentHash(intent1);
@@ -65,25 +44,11 @@ contract IntentTypesTest is Test {
 
     function test_intentHashUniqueness() public {
         IntentTypes.Intent memory intent1 = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            hex"1234",
-            100,
-            1,
-            1000,
-            2000,
-            bytes32(uint256(0x123))
+            address(0x1), address(0x2), hex"1234", 100, 1, 1000, 2000, bytes32(uint256(0x123))
         );
 
         IntentTypes.Intent memory intent2 = TestHelpers.createIntent(
-            address(0x1),
-            address(0x2),
-            hex"1234",
-            101,
-            1,
-            1000,
-            2000,
-            bytes32(uint256(0x123))
+            address(0x1), address(0x2), hex"1234", 101, 1, 1000, 2000, bytes32(uint256(0x123))
         );
 
         bytes32 hash1 = TestHelpers.computeIntentHash(intent1);
@@ -103,16 +68,8 @@ contract IntentTypesTest is Test {
         uint256[] memory chains = new uint256[](1);
         chains[0] = 1;
 
-        IntentTypes.Policy memory policy = TestHelpers.createPolicy(
-            address(0x3),
-            targets,
-            selectors,
-            1000,
-            10000,
-            100,
-            200,
-            chains
-        );
+        IntentTypes.Policy memory policy =
+            TestHelpers.createPolicy(address(0x3), targets, selectors, 1000, 10000, 100, 200, chains);
 
         bytes memory encoded = abi.encode(policy);
         assertGt(encoded.length, 0);
