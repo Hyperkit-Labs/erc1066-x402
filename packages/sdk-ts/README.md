@@ -5,7 +5,7 @@ TypeScript SDK for interacting with the ERC-1066-x402 gateway. Provides type-saf
 ## Installation
 
 ```bash
-npm install @hyperkit/erc1066-x402-sdk
+npm install @hyperkit/erc1066-x402
 ```
 
 ## Quick Start
@@ -13,7 +13,7 @@ npm install @hyperkit/erc1066-x402-sdk
 ### Basic Usage
 
 ```typescript
-import { ERC1066Client, Intent } from '@hyperkit/erc1066-x402-sdk';
+import { ERC1066Client, Intent } from '@hyperkit/erc1066-x402';
 
 // Initialize client
 const client = new ERC1066Client('http://localhost:3000');
@@ -88,7 +88,7 @@ Maps a status code to an action.
 ## Complete Example
 
 ```typescript
-import { ERC1066Client, Intent } from '@hyperkit/erc1066-x402-sdk';
+import { ERC1066Client, Intent } from '@hyperkit/erc1066-x402';
 
 async function main() {
   // Initialize client
@@ -222,10 +222,10 @@ See [examples/](./examples/) directory for:
 
 ```bash
 # Ensure package is installed
-npm install @hyperkit/erc1066-x402-sdk
+npm install @hyperkit/erc1066-x402
 
 # Verify installation
-npm list @hyperkit/erc1066-x402-sdk
+npm list @hyperkit/erc1066-x402
 ```
 
 ### Type Errors
