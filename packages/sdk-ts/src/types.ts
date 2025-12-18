@@ -7,6 +7,7 @@ export interface Intent {
   validAfter?: string;
   validBefore?: string;
   policyId: string;
+  chainType: "evm" | "solana" | "sui";
 }
 
 export type StatusCode =
@@ -30,6 +31,18 @@ export interface ValidateResponse {
   status: StatusCode;
   httpCode: number;
   intentHash: string;
+  chainType: string;
+  chainId: number;
+  accepts?: Array<{
+    paymentRequirements: {
+      scheme: string;
+      version: number;
+      amount: string;
+      asset: string;
+      network: string;
+      extra?: any;
+    };
+  }>;
 }
 
 export interface ExecuteResponse {
@@ -37,5 +50,7 @@ export interface ExecuteResponse {
   result?: any;
   paymentRequest?: any;
   error?: string;
+  intentHash: string;
+  chainType: string;
+  chainId: number;
 }
-
