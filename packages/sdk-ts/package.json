@@ -1,5 +1,5 @@
 {
-  "name": "@hyperkit/erc1066-x402-sdk",
+  "name": "@hyperkit/erc1066-x402",
   "version": "0.1.0",
   "description": "TypeScript SDK for ERC-1066-x402 gateway",
   "main": "dist/index.js",
