@@ -34,6 +34,14 @@ bin-release/
 *.ipa
 *.apk
 
+# Rust / Solana
+**/target/
+**/*.rs.bk
+
+# Sui
+move/*/build/
+move/*/Move.lock
+
 # Package build outputs
 packages/*/dist/
 packages/*/build/
