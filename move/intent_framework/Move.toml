@@ -1,0 +1,11 @@
+[package]
+name = "intent_framework"
+version = "0.1.0"
+edition = "2024.beta" # Sui Move 2024
+
+[dependencies]
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "framework/testnet" }
+
+[addresses]
+intent_framework = "0xf98be18dc82a4caa9dcdd08d6c49b76a67cf8ac7b33be3eab119dd0fb5f44c02"
+hyperkit = "0x2557e9f986be02da639277dbdd14b028964288fb46b801e3d151312571a2bb8e"
