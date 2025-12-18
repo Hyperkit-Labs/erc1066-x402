@@ -7,6 +7,7 @@ export interface Intent {
   validAfter?: string;
   validBefore?: string;
   policyId: string;
+  chainType: "evm" | "solana" | "sui";
 }
 
 export interface Policy {
