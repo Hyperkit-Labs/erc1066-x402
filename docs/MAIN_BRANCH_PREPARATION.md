@@ -43,4 +43,4 @@ Verify that all technical specifications in `specs/v2/` match the code implement
 2. **PR**: Create Pull Request on GitHub.
 3. **Review**: Wait for 2+ reviews and passing status checks.
 4. **Merge**: Squash and merge into `main`.
-5. **Tag**: `git tag -a v0.3.0 -m "Release v0.3.0: Multi-chain Expansion"`
+5. **Tag**: `git tag -a v0.2.0 -m "Release v0.2.0: Multi-chain Expansion"`
