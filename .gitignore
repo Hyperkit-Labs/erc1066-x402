@@ -18,6 +18,8 @@ package-lock.json
 .idea/
 *.swp
 *.swo
+.cursor/
+.cursorrules/
 
 # OS
 .DS_Store
