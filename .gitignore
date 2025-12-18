@@ -44,6 +44,12 @@ bin-release/
 move/*/build/
 move/*/Move.lock
 
+# Development / Testing (Production Clean)
+test/
+tests/
+script/test/
+version/
+
 # Package build outputs
 packages/*/dist/
 packages/*/build/
