@@ -181,6 +181,8 @@ The gateway supports **any EVM-compatible chain** via Chainlist. Tested networks
 - **Mantle Mainnet** (Chain ID: 5000)
 - **Avalanche Fuji** (Chain ID: 43113) ✅ [Deployed](https://testnet.snowtrace.io/address/0x76837E513b3e6E6eFc828757764Ed5d0Fd24f2dE) | ✅ Verified
 - **Avalanche C-Chain** (Chain ID: 43114)
+- **Solana Devnet** ✅ [Deployed](https://explorer.solana.com/address/B5fwL2MnnGTsJzShmJYjdVGSDwduyr3Guan9XNAF7Vbb?cluster=devnet) | ✅ Verified
+- **Sui Testnet** ✅ [Published](https://suiscan.xyz/testnet/account/0x2557e9f986be02da639277dbdd14b028964288fb46b801e3d151312571a2bb8e/activity) | ✅ Verified
 
 **Network-Agnostic Design**: The gateway automatically discovers RPC endpoints via [Chainlist](https://chainlist.org), so you can add new networks without code changes. See [Network Configuration](./docs/deployment/NETWORKS.md) for details.
 

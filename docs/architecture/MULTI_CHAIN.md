@@ -27,6 +27,16 @@ The system achieves multi-chain support through three key components:
 - **Mechanism**: `abort status`
 - **Verification**: `dryRunTransactionBlock`. The Gateway extracts the abort code from the transaction effects.
 
+## Real-World Deployments
+
+### Solana Devnet
+- **Program ID**: `B5fwL2MnnGTsJzShmJYjdVGSDwduyr3Guan9XNAF7Vbb`
+- **Explorer**: [View on Solana Explorer](https://explorer.solana.com/address/B5fwL2MnnGTsJzShmJYjdVGSDwduyr3Guan9XNAF7Vbb?cluster=devnet)
+
+### Sui Testnet
+- **Package ID**: `0x2557e9f986be02da639277dbdd14b028964288fb46b801e3d151312571a2bb8e`
+- **Explorer**: [View on Suiscan](https://suiscan.xyz/testnet/account/0x2557e9f986be02da639277dbdd14b028964288fb46b801e3d151312571a2bb8e/activity)
+
 ## Intent Routing
 
 When an agent sends an intent to the Gateway, the following flow occurs:

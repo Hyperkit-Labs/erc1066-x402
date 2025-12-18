@@ -125,12 +125,31 @@ Deployment used legacy transactions (non-EIP-1559) due to network limitations. A
 | Metis Sepolia | 59902 | ✅ Deployed | ⚠️ Manual | [Explorer](https://sepolia-explorer.metisdevops.link/) |
 | Mantle Testnet | 5003 | ✅ Deployed | ✅ Sourcify | [Explorer](https://explorer.testnet.mantle.xyz) |
 | Avalanche Fuji | 43113 | ✅ Deployed | ✅ Sourcify | [Explorer](https://testnet.snowtrace.io) |
+| Solana Devnet | - | ✅ Deployed | ✅ Live | [Explorer](https://explorer.solana.com/address/B5fwL2MnnGTsJzShmJYjdVGSDwduyr3Guan9XNAF7Vbb?cluster=devnet) |
+| Sui Testnet | - | ✅ Published | ✅ Live | [Explorer](https://suiscan.xyz/testnet/account/0x2557e9f986be02da639277dbdd14b028964288fb46b801e3d151312571a2bb8e/activity) |
 
 ### Total Deployments
 
-- **3 Networks** deployed
-- **9 Contracts** deployed (3 per network)
-- **9 Contracts** verified automatically (all on Sourcify)
+- **5 Networks** deployed (3 EVM, 1 Solana, 1 Sui)
+- **11 Contracts** deployed (9 EVM, 1 Solana, 1 Sui)
+- **11 Components** verified/live across all chains
+
+## ✅ Solana Devnet - DEPLOYED
+
+**Program ID**: `B5fwL2MnnGTsJzShmJYjdVGSDwduyr3Guan9XNAF7Vbb`
+
+### Explorer Links
+- **Solana Program**: [View on Solana Explorer](https://explorer.solana.com/address/B5fwL2MnnGTsJzShmJYjdVGSDwduyr3Guan9XNAF7Vbb?cluster=devnet)
+- **System Program**: [View on Solana Explorer](https://explorer.solana.com/address/11111111111111111111111111111111?cluster=devnet)
+
+## ✅ Sui Testnet - PUBLISHED
+
+**Package ID**: `0x2557e9f986be02da639277dbdd14b028964288fb46b801e3d151312571a2bb8e`
+
+### Explorer Links
+- **Sui Package**: [View on Suiscan](https://suiscan.xyz/testnet/account/0x2557e9f986be02da639277dbdd14b028964288fb46b801e3d151312571a2bb8e/activity)
+- **Latest Transaction**: [View on Suiscan](https://suiscan.xyz/testnet/tx/4dpx894zRi192YC73Lt3TNTGenMueTbUfRuCyztfcAih)
+
 
 ## Next Steps
 
