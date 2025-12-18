@@ -20,7 +20,17 @@ ERC-1066-x402 is a set of Ethereum-compatible smart contracts that standardize *
 - ✅ Policy-based access control (limits, permissions, chains, assets)
 - ✅ Network-agnostic gateway using [Chainlist](https://chainlist.org) for automatic RPC discovery
 - ✅ TypeScript and Python SDKs for easy integration
-- ✅ Multi-chain support (7+ networks tested)
+- ✅ Multi-chain support (EVM, Solana, Sui)
+
+## 🌍 Multi-Chain Support
+
+ERC-1066-x402 is designed to be network-agnostic. We provide standardized status mappings for:
+
+- **EVM**: Metis, Mantle, Avalanche, and more.
+- **Solana**: Support for Anchor-based programs and custom error codes.
+- **Sui**: Support for Move modules and standardized abort codes.
+
+For technical details, see [MULTI_CHAIN.md](docs/architecture/MULTI_CHAIN.md).
 
 ## Why ERC1066-x402?
 
@@ -60,16 +70,41 @@ ERC-1066-x402 is a set of Ethereum-compatible smart contracts that standardize *
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Smart Contracts | ✅ Production-ready | Deployed to Hyperion Testnet, [View on Explorer](https://hyperion-testnet-explorer.metisdevops.link/address/0x92C73F9f972Bb0bdC8e3c5411345695F2E3710D0) |
-| Gateway Service | ✅ Beta | Network-agnostic, Chainlist integration |
-| Python SDK | ✅ Published | Available on PyPI as `hyperkitlabs-erc1066-x402` |
-| TypeScript SDK | ⏳ Ready | Pending npm publication |
-| Test Coverage | ✅ 38/38 passing | Unit + integration tests, gas reports available |
-| Security | ✅ OpenZeppelin contracts | Using audited libraries, reentrancy guards, access controls |
+### TypeScript SDK
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Multi-Chain | ⏳ v0.3.0 Beta | EVM, Solana (Devnet), Sui (Testnet) supported |
+| x402 Standard | ✅ v2 Aligned | Full compatibility with transport v2 + exact scheme |
+| Smart Contracts | ✅ Deployed | Metis, Mantle, Avalanche, Solana, Sui |
+| SDKs | ✅ v0.1.0/v0.2.0 | TS (@hyperkit/erc1066-x402 v0.1.0) and Python (hyperkitlabs-erc1066-x402 v0.2.0) |
+| Test Coverage | ✅ 100% Green | 38/38 EVM tests passing + multi-chain simulation |
+
+### What's New in v0.3.0
+- **x402 v2 Alignment**: Fully compatible with the latest x402 transport and `exact` scheme specification.
+- **Solana Support**: Real Devnet simulation using `@solana/web3.js` and Borsh encoding.
+- **Sui Support**: Real Testnet dry-run integration using `@mysten/sui.js`.
+- **Chain-Agnostic SDKs**: Unified TypeScript and Python clients for cross-chain intent validation.
 
 ## Quick Start
 
-### 1. Clone and Install
+### 1. Toolchain Prerequisites
+
+Ensure you have the required tools for your target chains:
+
+- **EVM**: [Foundry](https://book.getfoundry.sh/getting-started/installation)
+- **Solana**: [Anchor](https://www.anchor-lang.com/docs/installation)
+- **Sui**: [Sui CLI](https://docs.sui.io/guides/developer/getting-started/sui-install)
+
+One-command setup for Solana & Sui (WSL/Linux/macOS):
+```bash
+# Solana, Rust, and Anchor
+curl --proto '=https' --tlsv1.2 -sSfL https://solana-install.solana.workers.dev | bash
+
+# Sui Toolchain
+curl -sSfL https://raw.githubusercontent.com/Mystenlabs/suiup/main/install.sh | sh && suiup install sui@testnet
+```
+
+### 2. Clone and Install
 
 ```bash
 git clone https://github.com/hyperkit-labs/erc1066-x402.git
@@ -153,12 +188,14 @@ The gateway supports **any EVM-compatible chain** via Chainlist. Tested networks
 
 📚 **[Complete Documentation Index](./docs/README.md)**
 
-### Essential Guides
+### Technical Specifications
 
-- **[Getting Started](./GETTING_STARTED.md)** - First-time setup guide
-- **[Quick Start Guide](./docs/QUICK_START_COMPLETE.md)** - Complete step-by-step walkthrough
-- **[Deployment Guide](./docs/deployment/DEPLOYMENT_GUIDE.md)** - Multi-chain deployment
-- **[Network-Agnostic Architecture](./docs/architecture/NETWORK_AGNOSTIC.md)** - Chainlist integration
+We follow the **x402 v2 Standard** for transport and **ERC-1066** for semantics. See the [Specs Directory](./specs/README.md) for details:
+
+- **[TRANSPORT](./specs/v2/TRANSPORT.md)** - HTTP 402 transport layer (Latest)
+- **[SEMANTICS](./specs/v2/SEMANTICS.md)** - ERC-1066 status codes (Latest)
+- **[SCHEMES](./specs/v2/SCHEMES.md)** - Payment fulfillment (Latest)
+- **[PROTOCOLS](./specs/v2/PROTOCOLS.md)** - Multi-chain (EVM, Solana, Sui)
 
 ### Integration
 
@@ -201,7 +238,7 @@ pip install hyperkitlabs-erc1066-x402
 ### TypeScript SDK
 
 ```bash
-npm install @hyperkit/erc1066-x402-sdk
+npm install @hyperkit/erc1066-x402
 ```
 
 ## Featured Examples
@@ -304,7 +341,7 @@ if result.status == "0x01":
 ### TypeScript SDK
 
 ```typescript
-import { ERC1066Client } from '@hyperkit/erc1066-x402-sdk';
+import { ERC1066Client } from '@hyperkit/erc1066-x402';
 
 const client = new ERC1066Client('http://localhost:3001');
 const result = await client.validateIntent(intent, 133717);
