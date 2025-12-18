@@ -98,9 +98,7 @@ contract IntentExecutorTest is Test {
         // For errors with dynamic bytes, we need to encode manually
         bytes memory reentrancyErrorData = abi.encodeWithSelector(ReentrancyGuard.ReentrancyGuardReentrantCall.selector);
         bytes memory expectedError = abi.encodeWithSelector(
-            IntentExecutor.ExecutionFailed.selector,
-            StatusCodes.STATUS_TRANSFER_FAILED,
-            reentrancyErrorData
+            IntentExecutor.ExecutionFailed.selector, StatusCodes.STATUS_TRANSFER_FAILED, reentrancyErrorData
         );
         vm.expectRevert(expectedError);
         executor.execute(intent);

@@ -43,7 +43,7 @@ contract BaseIntentValidatorTest is Test {
         // Set block.timestamp to a known value, then use a validBefore that's in the past
         vm.warp(100);
         uint256 pastTimestamp = 99; // Definitely less than block.timestamp (100)
-        
+
         IntentTypes.Intent memory intent =
             TestHelpers.createIntent(address(0x1), address(0x2), "", 0, 0, 0, pastTimestamp, policyId);
 
