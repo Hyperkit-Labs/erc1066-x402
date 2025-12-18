@@ -8,9 +8,10 @@ Before you begin, ensure you have:
 
 - [ ] **Node.js 18+** installed (`node --version`)
 - [ ] **Foundry** installed (`forge --version`)
+- [ ] **Solana Toolchain** installed (`solana --version`, `anchor --version`)
+- [ ] **Sui Toolchain** installed (`sui --version`)
 - [ ] **Git** installed (`git --version`)
 - [ ] **A wallet** with testnet tokens (for deployment)
-- [ ] **Basic Solidity knowledge** (for contract development)
 
 ### Installing Prerequisites
 
@@ -19,15 +20,27 @@ Before you begin, ensure you have:
 # Using nvm (recommended)
 nvm install 18
 nvm use 18
-
-# Or download from nodejs.org
 ```
 
-**Foundry:**
+**Foundry (EVM):**
 ```bash
 curl -L https://foundry.paradigm.xyz | bash
 foundryup
-forge --version  # Verify installation
+```
+
+**Solana & Anchor (Rust):**
+```bash
+# Installs Rust, Solana CLI, and Anchor in one go
+curl --proto '=https' --tlsv1.2 -sSfL https://solana-install.solana.workers.dev | bash
+```
+
+**Sui (Move):**
+```bash
+# 1. Install suiup
+curl -sSfL https://raw.githubusercontent.com/Mystenlabs/suiup/main/install.sh | sh
+
+# 2. Install Sui Testnet binaries
+suiup install sui@testnet
 ```
 
 ## Step 1: Clone and Setup
@@ -177,7 +190,7 @@ print(f"Status: {result.status}")
 ### TypeScript SDK
 
 ```bash
-npm install @hyperkit/erc1066-x402-sdk
+npm install @hyperkit/erc1066-x402
 ```
 
 ```typescript
