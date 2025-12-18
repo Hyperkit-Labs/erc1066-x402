@@ -4,7 +4,7 @@ This guide covers the complete setup from deployment to testing.
 
 ## ✅ Completed Steps 1-12
 
-1. ✅ Prerequisites installed
+1. ✅ Prerequisites installed (Node.js, Foundry, Solana Toolchain, Sui CLI)
 2. ✅ Repository cloned and dependencies installed
 3. ✅ Environment variables configured
 4. ✅ Contracts deployed to Hyperion Testnet
@@ -15,32 +15,19 @@ This guide covers the complete setup from deployment to testing.
 9. ✅ Health check verified
 10. ✅ Chains endpoint tested
 11. ✅ Policy creation script ready
-12. ✅ Intent validation tested with EIP7702 addresses
+12. ✅ Intent validation tested with multi-chain addresses
 
-## 📦 SDK Publishing (Ready)
+## 📦 SDK Publishing (Multi-Chain Release)
 
 ### TypeScript SDK
-- ✅ Builds successfully
-- ✅ Runtime tested
-- ✅ Ready for npm publishing
-
-**To Publish:**
-```bash
-cd packages/sdk-ts
-npm login  # Requires @hyperkit org access
-npm publish --access public
-```
+- ✅ Multi-chain support (EVM, Solana, Sui)
+- ✅ x402 v2 aligned
+- ⏳ Pending npm publish: `@hyperkit/erc1066-x402 v0.1.0`
 
 ### Python SDK
-- ✅ Configuration complete
-- ✅ Ready for PyPI publishing
-
-**To Publish:**
-```bash
-cd packages/sdk-python
-python -m build
-python -m twine upload dist/*  # Requires PyPI credentials
-```
+- ✅ Multi-chain support (EVM, Solana, Sui)
+- ✅ x402 v2 aligned
+- ⏳ Pending PyPI publish: `hyperkitlabs-erc1066-x402 v0.2.0`
 
 ## 🧪 Steps 13-14.2: Integration Testing
 
@@ -118,4 +105,3 @@ All tests passed successfully:
 - [Custom Networks](./integration/CUSTOM_NETWORKS.md)
 - [Test Results](./TEST_RESULTS.md)
 - [Publishing Guide](./PUBLISHING.md)
-
