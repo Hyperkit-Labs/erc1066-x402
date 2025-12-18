@@ -73,17 +73,17 @@ For technical details, see [MULTI_CHAIN.md](docs/architecture/MULTI_CHAIN.md).
 ### TypeScript SDK
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Multi-Chain | ⏳ v0.3.0 Beta | EVM, Solana (Devnet), Sui (Testnet) supported |
+| Multi-Chain | ⏳ v0.2.0 Beta | EVM, Solana (Devnet), Sui (Testnet) supported |
 | x402 Standard | ✅ v2 Aligned | Full compatibility with transport v2 + exact scheme |
 | Smart Contracts | ✅ Deployed | Metis, Mantle, Avalanche, Solana, Sui |
 | SDKs | ✅ v0.1.0/v0.2.0 | TS (@hyperkit/erc1066-x402 v0.1.0) and Python (hyperkitlabs-erc1066-x402 v0.2.0) |
 | Test Coverage | ✅ 100% Green | 38/38 EVM tests passing + multi-chain simulation |
 
-### What's New in v0.3.0
+### What's New in v2.0.0
 - **x402 v2 Alignment**: Fully compatible with the latest x402 transport and `exact` scheme specification.
 - **Solana Support**: Real Devnet simulation using `@solana/web3.js` and Borsh encoding.
 - **Sui Support**: Real Testnet dry-run integration using `@mysten/sui.js`.
-- **Chain-Agnostic SDKs**: Unified TypeScript and Python clients for cross-chain intent validation.
+- **Multi-Chain Core**: Native support for EVM, Solana (Anchor), and Sui (Move).
 
 ## Quick Start
 
