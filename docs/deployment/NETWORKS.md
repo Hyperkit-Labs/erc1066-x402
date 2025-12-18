@@ -13,10 +13,12 @@ This document lists all supported blockchain networks for ERC-1066-x402 deployme
 - **Deployment Command**: `npm run deploy:hyperion:testnet`
 
 ### Metis Sepolia
-- **Chain ID**: 59902
+- **Chain ID**: 59902 (0xe9fe)
 - **RPC URL**: https://metis-sepolia-rpc.publicnode.com
-- **Currency**: METIS
+- **Currency**: tMETIS
+- **Block Gas Limit**: Unknown
 - **Gas Price**: 1 gwei
+- **Explorer**: blockscout - https://sepolia-explorer.metisdevops.link
 - **Deployment Command**: `npm run deploy:metis:sepolia`
 
 ### Mantle Testnet

@@ -64,6 +64,10 @@ Complete documentation for ERC-1066-x402 project.
 
 ## Specifications
 
-- [Status Codes](./spec/status-codes.md) - ERC-1066 status code definitions
-- [Policy Schema](./spec/policy-schema.md) - Policy object schema
+Technical specifications are now maintained in versioned directories in the root [specs/](../specs/README.md) folder.
+
+- **[Status Codes](../specs/v2/SEMANTICS.md)** - ERC-1066 status code definitions (Latest)
+- **[Transport](../specs/v2/TRANSPORT.md)** - x402 v2 HTTP transport (Latest)
+- **[Schemes](../specs/v2/SCHEMES.md)** - Payment fulfillment (Latest)
+- **[Protocols](../specs/v2/PROTOCOLS.md)** - Multi-chain implementation
 

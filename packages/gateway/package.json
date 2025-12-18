@@ -11,6 +11,9 @@
     "format": "prettier --write 'src/**/*.ts'"
   },
   "dependencies": {
+    "@mysten/sui.js": "^0.54.1",
+    "@solana/web3.js": "^1.98.4",
+    "borsh": "^2.0.0",
     "dotenv": "^17.2.3",
     "fastify": "^4.26.0",
     "pino": "^9.3.0",

@@ -9,9 +9,9 @@
   "59902": {
     "chainId": 59902,
     "name": "Metis Sepolia",
-    "policyRegistry": "",
-    "validator": "",
-    "executor": ""
+    "policyRegistry": "0xc11E8CA852f945FfCb11e3ff9F1E677867E1E7a8",
+    "validator": "0x31e4C52EB4292E372B580FCfc93bDdDd72d7237C",
+    "executor": "0xE331CdA35e2e9861e7E8F4aB2663a58F434715f3"
   },
   "1088": {
     "chainId": 1088,
@@ -23,9 +23,9 @@
   "5003": {
     "chainId": 5003,
     "name": "Mantle Testnet",
-    "policyRegistry": "",
-    "validator": "",
-    "executor": ""
+    "policyRegistry": "0x10B88f0Dd46EfE496d023E0328259feBcDaE16df",
+    "validator": "0x6714Ac734541173aB8480811f4390ADEe6f58ac9",
+    "executor": "0xD991F25A5327EBB8A6482eE6a92E7CcE2068B733"
   },
   "5000": {
     "chainId": 5000,
@@ -37,9 +37,9 @@
   "43113": {
     "chainId": 43113,
     "name": "Avalanche Fuji",
-    "policyRegistry": "",
-    "validator": "",
-    "executor": ""
+    "policyRegistry": "0xE578538AE243a0Df05c8021934967Eb718A48663",
+    "validator": "0x6aE086fB835D53D7fae1B57Cc8A55FEEaEC6ba5b",
+    "executor": "0x76837E513b3e6E6eFc828757764Ed5d0Fd24f2dE"
   },
   "43114": {
     "chainId": 43114,

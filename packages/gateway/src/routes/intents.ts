@@ -5,16 +5,18 @@ import { IntentExecutor } from "../services/executor";
 import { X402Service } from "../services/x402";
 import { computeIntentHash } from "../utils/chain";
 import { ValidationError } from "../utils/errors";
+import { buildX402V2Response } from "../utils/x402v2";
 
 const IntentSchema = z.object({
-  sender: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
-  target: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
+  sender: z.string(), // Relaxed for multi-chain (EVM: 0x..., Solana: Base58, Sui: 0x...)
+  target: z.string(),
   data: z.string().regex(/^0x[a-fA-F0-9]*$/),
   value: z.string().regex(/^\d+$/),
   nonce: z.string().regex(/^\d+$/),
   validAfter: z.string().regex(/^\d+$/).optional(),
   validBefore: z.string().regex(/^\d+$/).optional(),
-  policyId: z.string().regex(/^0x[a-fA-F0-9]{64}$/),
+  policyId: z.string(), // Relaxed
+  chainType: z.enum(["evm", "solana", "sui"]),
 });
 
 export async function intentRoutes(fastify: FastifyInstance) {
@@ -26,20 +28,14 @@ export async function intentRoutes(fastify: FastifyInstance) {
     try {
       const intent = IntentSchema.parse(request.body);
       const chainId = Number(request.headers["x-chain-id"] || "1");
+      const intentHash = computeIntentHash(intent);
 
       const status = await validator.canExecute(intent, chainId);
-      const httpResponse = validator.mapStatusToHttp(status);
+      const v2Response = buildX402V2Response(status, intent, chainId, intentHash);
 
-      reply.code(httpResponse.code);
-      reply.headers({
-        "X-Status-Code": status,
-        ...httpResponse.headers,
-      });
-
-      return {
-        status,
-        intentHash: computeIntentHash(intent),
-      };
+      reply.code(v2Response.code);
+      reply.headers(v2Response.headers);
+      return v2Response.body;
     } catch (error) {
       if (error instanceof z.ZodError) {
         throw new ValidationError(error.message);
@@ -52,39 +48,30 @@ export async function intentRoutes(fastify: FastifyInstance) {
     try {
       const intent = IntentSchema.parse(request.body);
       const chainId = Number(request.headers["x-chain-id"] || "1");
+      const intentHash = computeIntentHash(intent);
 
       const status = await validator.canExecute(intent, chainId);
 
       if (status === "0x54") {
-        const paymentRequest = await x402.createPaymentRequest(intent, chainId);
-        reply.code(402);
-        reply.headers({
-          "X-Payment-Required": "true",
-          "X-Payment-Request-Id": paymentRequest.id,
-          ...paymentRequest.headers,
-        });
-        return {
-          status,
-          paymentRequest,
-        };
+        const v2Response = buildX402V2Response(status, intent, chainId, intentHash);
+        reply.code(v2Response.code);
+        reply.headers(v2Response.headers);
+        return v2Response.body;
       }
 
       if (status !== "0x01") {
-        const httpResponse = validator.mapStatusToHttp(status);
-        reply.code(httpResponse.code);
-        reply.headers({ "X-Status-Code": status });
-        return {
-          status,
-          error: "Execution denied",
-        };
+        const v2Response = buildX402V2Response(status, intent, chainId, intentHash);
+        reply.code(v2Response.code);
+        reply.headers(v2Response.headers);
+        return v2Response.body;
       }
 
       const result = await executor.execute(intent, chainId);
-      reply.code(200);
-      return {
-        status: "0x01",
-        result,
-      };
+      const v2Response = buildX402V2Response("0x01", intent, chainId, intentHash, { result });
+      
+      reply.code(v2Response.code);
+      reply.headers(v2Response.headers);
+      return v2Response.body;
     } catch (error) {
       if (error instanceof z.ZodError) {
         throw new ValidationError(error.message);
