@@ -19,6 +19,9 @@ class ERC1066Client:
             status=data["status"],
             httpCode=response.status_code,
             intentHash=data["intentHash"],
+            chainType=data["chainType"],
+            chainId=data["chainId"],
+            accepts=data.get("accepts"),
         )
 
     def execute_intent(self, intent: Intent, chain_id: int) -> ExecuteResponse:
