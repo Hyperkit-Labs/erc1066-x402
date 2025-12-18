@@ -23,6 +23,8 @@
     "deploy:mantle:mainnet": "forge script script/Deploy.s.sol:Deploy --rpc-url mantle_mainnet --broadcast --verify",
     "deploy:avalanche:fuji": "forge script script/Deploy.s.sol:Deploy --rpc-url avalanche_fuji --broadcast --verify",
     "deploy:avalanche:mainnet": "forge script script/Deploy.s.sol:Deploy --rpc-url avalanche_mainnet --broadcast --verify",
+    "deploy:solana": "cd programs/solana-intents && anchor deploy",
+    "deploy:sui": "cd move/intent_framework && sui move publish --gas-budget 100000000",
     "clean": "forge clean",
     "docs:generate": "forge doc --out docs/api"
   },
