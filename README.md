@@ -76,7 +76,7 @@ For technical details, see [MULTI_CHAIN.md](docs/architecture/MULTI_CHAIN.md).
 | Multi-Chain | ⏳ v0.3.0 Beta | EVM, Solana (Devnet), Sui (Testnet) supported |
 | x402 Standard | ✅ v2 Aligned | Full compatibility with transport v2 + exact scheme |
 | Smart Contracts | ✅ Deployed | Metis, Mantle, Avalanche, Solana, Sui |
-| SDKs | ✅ v0.1.0/v0.2.0 | TS (@hyperkit/erc1066-x402 v0.1.0) and Python (hyperkitlabs-erc1066-x402 v0.2.0) |
+| SDKs | ✅ v0.1.0/v0.3.0 | TS (@hyperkit/erc1066-x402 v0.1.0) and Python (hyperkitlabs-erc1066-x402 v0.3.0) |
 | Test Coverage | ✅ 100% Green | 38/38 EVM tests passing + multi-chain simulation |
 
 ### What's New in v0.3.0
