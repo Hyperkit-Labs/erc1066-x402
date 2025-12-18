@@ -1,6 +1,6 @@
 {
   "name": "@hyperkit/erc1066-x402-gateway",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
