@@ -1,8 +1,8 @@
 # Main Branch Status: PRODUCTION READY
 
-The `develop` branch has met all criteria for integration into `main`. This release (v0.2.0) represents the complete multi-chain expansion of the ERC-1066-x402 framework.
+The `develop` branch has met all criteria for integration into `main`. This release (v0.3.0) represents the complete multi-chain expansion of the ERC-1066-x402 framework.
 
-## ✅ Milestone Completion (v0.2.0)
+## ✅ Milestone Completion (v0.3.0)
 
 ### 1. Protocol Upgrades
 - **x402 v2 Alignment**: Gateway refactored to use the v2 transport layer with structured JSON responses.
@@ -19,14 +19,14 @@ The `develop` branch has met all criteria for integration into `main`. This rele
 - **Formal Specs**: Moved technical documentation into a Coinbase-aligned `specs/` structure.
 
 ## 🚀 Release Metadata
-- **Version**: 0.2.0
+- **Version**: 0.3.0
 - **EVM Tests**: 38 Passed / 0 Failed
 - **SDK Targets**: 
   - `@hyperkit/erc1066-x402`: v0.1.0
-  - `hyperkitlabs-erc1066-x402`: v0.2.0
+  - `hyperkitlabs-erc1066-x402`: v0.3.0
 
 ## 📦 Merge Instructions
 1. Create PR from `develop` to `main`.
 2. Attach the generated PR description.
 3. Once 2 approvals are secured, perform a **Squash and Merge**.
-4. Tag the commit with `v0.2.0`.
+4. Tag the commit with `v0.3.0`.
