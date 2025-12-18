@@ -16,11 +16,14 @@ export class ERC1066Client {
       body: JSON.stringify(intent),
     });
 
-    const data = await response.json() as { status: StatusCode; intentHash: string };
+    const data = await response.json();
     return {
       status: data.status,
       httpCode: response.status,
       intentHash: data.intentHash,
+      chainType: data.chainType,
+      chainId: data.chainId,
+      accepts: data.accepts,
     };
   }
 
