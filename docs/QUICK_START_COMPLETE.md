@@ -22,7 +22,7 @@ This guide covers the complete setup from deployment to testing.
 ### TypeScript SDK
 - ✅ Multi-chain support (EVM, Solana, Sui)
 - ✅ x402 v2 aligned
-- ⏳ Pending npm publish: `@hyperkit/erc1066-x402 v0.1.0`
+- ⏳ Pending npm publish: `@hyperkitlab/erc1066-x402 v0.1.0`
 
 ### Python SDK
 - ✅ Multi-chain support (EVM, Solana, Sui)

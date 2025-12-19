@@ -74,8 +74,8 @@ npm publish --access public
 
 After publishing, verify:
 ```bash
-npm view @hyperkit/erc1066-x402-sdk
+npm view @hyperkitlab/erc1066-x402
 ```
 
-Or check: https://www.npmjs.com/package/@hyperkit/erc1066-x402-sdk
+Or check: https://www.npmjs.com/package/@hyperkitlab/erc1066-x402
 

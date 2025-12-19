@@ -46,7 +46,7 @@ This layer is what actually turns your ERC‑1066 codes into usable HTTP/x402 be
 Make it easy for agents, frontends, and backends to consume `erc1066-x402`.
 
 - TypeScript SDK
-    - Repository package `@hyperkit/erc1066-x402-sdk`.
+    - Repository package `@hyperkitlab/erc1066-x402`.
     - Wraps:
         - Intent construction and hashing.
         - Calls to the gateway (`validate`, `execute`, x402 flows).

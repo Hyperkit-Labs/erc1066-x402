@@ -1,5 +1,5 @@
 {
-  "name": "@hyperkit/erc1066-x402-gateway",
+  "name": "@hyperkitlab/erc1066-x402-gateway",
   "version": "0.1.0",
   "type": "module",
   "scripts": {

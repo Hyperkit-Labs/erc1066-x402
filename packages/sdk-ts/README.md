@@ -5,7 +5,7 @@ TypeScript SDK for interacting with the ERC-1066-x402 gateway. Provides type-saf
 ## Installation
 
 ```bash
-npm install @hyperkit/erc1066-x402
+npm install @hyperkitlab/erc1066-x402
 ```
 
 ## Quick Start
@@ -13,7 +13,7 @@ npm install @hyperkit/erc1066-x402
 ### Basic Usage
 
 ```typescript
-import { ERC1066Client, Intent } from '@hyperkit/erc1066-x402';
+import { ERC1066Client, Intent } from '@hyperkitlab/erc1066-x402';
 
 // Initialize client
 const client = new ERC1066Client('http://localhost:3000');
@@ -88,7 +88,7 @@ Maps a status code to an action.
 ## Complete Example
 
 ```typescript
-import { ERC1066Client, Intent } from '@hyperkit/erc1066-x402';
+import { ERC1066Client, Intent } from '@hyperkitlab/erc1066-x402';
 
 async function main() {
   // Initialize client
@@ -178,7 +178,7 @@ See [Status Codes Specification](../../docs/spec/status-codes.md) for complete l
 ## Error Handling
 
 ```typescript
-import { ERC1066Client } from '@hyperkit/erc1066-x402-sdk';
+import { ERC1066Client } from '@hyperkitlab/erc1066-x402';
 
 const client = new ERC1066Client('http://localhost:3000');
 
@@ -197,7 +197,7 @@ try {
 ## Utility Functions
 
 ```typescript
-import { computeIntentHash, encodeIntent, decodeIntent } from '@hyperkit/erc1066-x402-sdk';
+import { computeIntentHash, encodeIntent, decodeIntent } from '@hyperkitlab/erc1066-x402';
 
 // Compute intent hash
 const hash = computeIntentHash(intent);
@@ -222,10 +222,10 @@ See [examples/](./examples/) directory for:
 
 ```bash
 # Ensure package is installed
-npm install @hyperkit/erc1066-x402
+npm install @hyperkitlab/erc1066-x402
 
 # Verify installation
-npm list @hyperkit/erc1066-x402
+npm list @hyperkitlab/erc1066-x402
 ```
 
 ### Type Errors

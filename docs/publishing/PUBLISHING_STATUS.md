@@ -14,7 +14,7 @@ pip install hyperkitlabs-erc1066-x402
 
 ## ⏳ TypeScript SDK - Pending
 
-**Package**: `@hyperkit/erc1066-x402-sdk`  
+**Package**: `@hyperkitlab/erc1066-x402`  
 **Version**: `0.1.0`  
 **Status**: ⏳ Waiting for npm authentication (2FA required)
 
@@ -29,7 +29,7 @@ Use a **Granular Access Token** to bypass 2FA for automated publishing.
 1. **Create Granular Access Token:**
    - Visit: https://www.npmjs.com/settings/hyperkitdev/tokens
    - Generate new "Granular Access Token"
-   - Set permissions for `@hyperkit/erc1066-x402-sdk`
+   - Set permissions for `@hyperkitlab/erc1066-x402`
    - Copy the token
 
 2. **Publish using token:**
@@ -41,7 +41,7 @@ Use a **Granular Access Token** to bypass 2FA for automated publishing.
 
 3. **Verify:**
    ```bash
-   npm view @hyperkit/erc1066-x402-sdk
+   npm view @hyperkitlab/erc1066-x402
    ```
 
 See `packages/sdk-ts/PUBLISH_INSTRUCTIONS.md` for detailed instructions.

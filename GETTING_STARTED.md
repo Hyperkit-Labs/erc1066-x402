@@ -190,11 +190,11 @@ print(f"Status: {result.status}")
 ### TypeScript SDK
 
 ```bash
-npm install @hyperkit/erc1066-x402
+npm install @hyperkitlab/erc1066-x402
 ```
 
 ```typescript
-import { ERC1066Client } from '@hyperkit/erc1066-x402-sdk';
+import { ERC1066Client } from '@hyperkitlab/erc1066-x402';
 
 const client = new ERC1066Client('http://localhost:3001');
 const result = await client.validateIntent(intent, 133717);

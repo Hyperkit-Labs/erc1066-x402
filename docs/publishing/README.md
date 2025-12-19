@@ -11,7 +11,7 @@ This directory contains all documentation related to publishing SDKs and package
 ## Quick Links
 
 ### TypeScript SDK
-- Package: `@hyperkit/erc1066-x402-sdk`
+- Package: `@hyperkitlab/erc1066-x402`
 - Status: ⏳ Pending (2FA authentication required)
 - Guide: See [NPM_PUBLISH_2FA.md](./NPM_PUBLISH_2FA.md)
 

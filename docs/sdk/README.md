@@ -20,7 +20,7 @@ pip install hyperkitlabs-erc1066-x402
 
 ### TypeScript
 ```bash
-npm install @hyperkit/erc1066-x402-sdk
+npm install @hyperkitlab/erc1066-x402
 ```
 
 ## Quick Start
@@ -36,7 +36,7 @@ result = client.validate_intent(intent, chain_id=133717)
 
 ### TypeScript
 ```typescript
-import { ERC1066Client } from '@hyperkit/erc1066-x402-sdk';
+import { ERC1066Client } from '@hyperkitlab/erc1066-x402';
 
 const client = new ERC1066Client('http://localhost:3001');
 const result = await client.validateIntent(intent, 133717);

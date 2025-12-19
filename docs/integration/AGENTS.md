@@ -7,7 +7,7 @@ Agents can integrate with ERC-1066-x402 using the TypeScript or Python SDKs.
 ## TypeScript SDK
 
 ```typescript
-import { ERC1066Client } from '@hyperkit/erc1066-x402-sdk';
+import { ERC1066Client } from '@hyperkitlab/erc1066-x402';
 
 const client = new ERC1066Client('https://gateway.example.com');
 

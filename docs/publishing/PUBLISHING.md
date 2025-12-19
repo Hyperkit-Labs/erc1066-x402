@@ -27,9 +27,9 @@ npm pack --dry-run
 npm publish --access public
 ```
 
-**Package Name**: `@hyperkit/erc1066-x402-sdk`  
+**Package Name**: `@hyperkitlab/erc1066-x402`  
 **Version**: `0.1.0`  
-**Registry**: https://www.npmjs.com/package/@hyperkit/erc1066-x402-sdk
+**Registry**: https://www.npmjs.com/package/@hyperkitlab/erc1066-x402
 
 ## Publishing Python SDK
 
@@ -57,7 +57,7 @@ python -m twine upload dist/*
 
 ### TypeScript SDK
 ```bash
-npm install @hyperkit/erc1066-x402-sdk
+npm install @hyperkitlab/erc1066-x402
 ```
 
 ### Python SDK

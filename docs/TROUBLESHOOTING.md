@@ -231,7 +231,7 @@ npm test
 1. **Update SDK:**
    ```bash
    pip install --upgrade hyperkitlabs-erc1066-x402
-   npm update @hyperkit/erc1066-x402-sdk
+   npm update @hyperkitlab/erc1066-x402
    ```
 
 2. **Check API usage:**

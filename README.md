@@ -76,7 +76,7 @@ For technical details, see [MULTI_CHAIN.md](docs/architecture/MULTI_CHAIN.md).
 | Multi-Chain | ⏳ v0.2.0 Beta | EVM, Solana (Devnet), Sui (Testnet) supported |
 | x402 Standard | ✅ v2 Aligned | Full compatibility with transport v2 + exact scheme |
 | Smart Contracts | ✅ Deployed | Metis, Mantle, Avalanche, Solana, Sui |
-| SDKs | ✅ v0.1.0/v0.2.0 | TS (@hyperkit/erc1066-x402 v0.1.0) and Python (hyperkitlabs-erc1066-x402 v0.2.0) |
+| SDKs | ✅ v0.1.0/v0.2.0 | TS (@hyperkitlab/erc1066-x402 v0.1.0) and Python (hyperkitlabs-erc1066-x402 v0.2.0) |
 | Test Coverage | ✅ 100% Green | 38/38 EVM tests passing + multi-chain simulation |
 
 ### What's New in v2.0.0
@@ -240,7 +240,7 @@ pip install hyperkitlabs-erc1066-x402
 ### TypeScript SDK
 
 ```bash
-npm install @hyperkit/erc1066-x402
+npm install @hyperkitlab/erc1066-x402
 ```
 
 ## Featured Examples
@@ -343,7 +343,7 @@ if result.status == "0x01":
 ### TypeScript SDK
 
 ```typescript
-import { ERC1066Client } from '@hyperkit/erc1066-x402';
+import { ERC1066Client } from '@hyperkitlab/erc1066-x402';
 
 const client = new ERC1066Client('http://localhost:3001');
 const result = await client.validateIntent(intent, 133717);

@@ -22,7 +22,7 @@ The `develop` branch has met all criteria for integration into `main`. This rele
 - **Version**: 0.2.0
 - **EVM Tests**: 38 Passed / 0 Failed
 - **SDK Targets**: 
-  - `@hyperkit/erc1066-x402`: v0.1.0
+  - `@hyperkitlab/erc1066-x402`: v0.1.0
   - `hyperkitlabs-erc1066-x402`: v0.2.0
 
 ## 📦 Merge Instructions
